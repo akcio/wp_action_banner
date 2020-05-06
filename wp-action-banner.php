@@ -152,7 +152,7 @@ function my_custom_init(){
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => null,
-        'supports'           => array('title','editor','author','thumbnail','excerpt','custom-fields')
+        'supports'           => array('custom-fields')
     ) );
 }
 add_action('init', 'my_custom_init');
