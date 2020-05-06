@@ -1,0 +1,158 @@
+<?php
+/*
+Plugin Name: Action Banner
+Plugin Script: wp-action-banner.php
+Description: Allows you to create custom banners, which consist of an image, text, a link, and a call to action.  Custom banners are easily output via shortcodes.
+Version: 0.1.1
+Author: Разработчики занаклейкой.рф
+*/
+
+defined( 'ABSPATH' ) or die( 'Nope, not accessing this' );
+
+
+
+class WP_Action_Banner{
+    public function __construct()
+    {
+        add_action('plugins_loaded', array($this, 'init_texdomain'));
+
+        //add single shortcode metabox to banner add/edit screen
+//        add_action( 'admin_menu', array($this,'add_meta_boxes')); // add our custom meta boxes
+//        add_action( 'admin_menu', array($this,'add_settings_link')); // add a link to the settings page under the banners menu
+//
+//        // add media buttons to admin
+//        $cur_post_type = ( isset($_GET['post']) ? get_post_type(intval($_GET['post'])) : '' );
+//        if( is_admin() && ( empty($_REQUEST['post_type']) || $_REQUEST['post_type'] !== 'banner' ) && ($cur_post_type !== 'banner') )
+//        {
+////            global $CustomBanners_MediaButton;
+////            $banner_shortcode = get_option("custom_banners_banner_shortcode", 'banner');
+////
+////            $CustomBanners_MediaButton = new Gold_Plugins_Media_Button('Banners', 'images-alt');
+////            $CustomBanners_MediaButton->add_button('Single Banner Widget', $banner_shortcode, 'singlebannerwidget', 'images-alt');
+////            $CustomBanners_MediaButton->add_button('List of Banners Widget', $banner_shortcode, 'bannerlistwidget', 'images-alt');
+////            $CustomBanners_MediaButton->add_button('Rotating Banner Widget',  $banner_shortcode, 'rotatingbannerwidget', 'images-alt');
+//        }
+    }
+
+    public function init_texdomain() {
+        $mo_file_path = dirname(__FILE__) . '/languages/action-banner-'. determine_locale() . '.mo';
+        load_textdomain( 'action-banner', $mo_file_path );
+        load_plugin_textdomain('action-banner', false, dirname(plugin_basename(__FILE__)).'/languages/' );
+    }
+
+//    function create_post_types()
+//    {
+//        $postType = array(
+//            'name' => 'Banner',
+//            'plural' => 'Banners',
+//            'slug' => 'banners',
+//            'menu_icon' => 'dashicons-images-alt'
+//        );
+//
+//        $customFields = array();
+//        $customFields[] = array('name' => 'target_url', 'title' => 'Target URL', 'description' => 'Where a user should be sent when they click on the banner or the call to action button', 'type' => 'text');
+//        $customFields[] = array('name' => 'cta_text', 'title' => 'Call To Action Text', 'description' => 'The "Call To Action" (text) of the button. Leave this field blank to hide the call to action button.', 'type' => 'text');
+//        $customFields[] = array('name' => 'css_class', 'title' => 'CSS Class', 'description' => 'Any extra CSS classes that you would like applied to this banner.', 'type' => 'text');
+//        $this->add_custom_post_type($postType, $customFields);
+//
+//        //load list of current posts that have featured images
+//        $supportedTypes = get_theme_support( 'post-thumbnails' );
+//
+//        //none set, add them just to our type
+//        if( $supportedTypes === false ){
+//            add_theme_support( 'post-thumbnails', array( 'banner' ) );
+//            //for the banner images
+//        }
+//        //specifics set, add our to the array
+//        elseif( is_array( $supportedTypes ) ){
+//            $supportedTypes[0][] = 'banner';
+//            add_theme_support( 'post-thumbnails', $supportedTypes[0] );
+//            //for the banner images
+//        }
+//
+//        //move featured image box to main column
+//        add_action('add_meta_boxes', array($this,'custom_banner_edit_screen'));
+//
+//        //remove unused meta boxes
+//        add_action( 'admin_init', array($this,'custom_banners_unused_meta'));
+//
+//        // move the post editor under the other metaboxes
+//        add_action( 'add_meta_boxes', array($this, 'reposition_editor_metabox'), 0 );
+//
+//        // enforce correct order of metaboxes
+//        add_action('admin_init', array($this, 'set_metabox_order'));
+//    }
+//
+//    function register_taxonomies()
+//    {
+//        $this->add_taxonomy('banner_groups', 'banner', 'Banner Group', 'Banner Groups');
+//    }
+//    private function add_custom_post_type($post_type, $custom_fields) {
+//        register_post_type( 'movies',
+//            // CPT Options
+//            array(
+//                'labels' => $custom_fields,
+//                'public' => true,
+//                'has_archive' => true,
+//                'rewrite' => array('slug' => 'movies'),
+//                'show_in_rest' => true,
+//
+//            )
+//        );
+//    }
+//    // Our custom post type function
+//    function create_posttype() {
+//
+//        register_post_type( 'movies',
+//            // CPT Options
+//            array(
+//                'labels' => array(
+//                    'name' => __( 'Movies' ),
+//                    'singular_name' => __( 'Movie' )
+//                ),
+//                'public' => true,
+//                'has_archive' => true,
+//                'rewrite' => array('slug' => 'movies'),
+//                'show_in_rest' => true,
+//
+//            )
+//        );
+//    }
+//// Hooking up our function to theme setup
+//add_action( 'init', 'create_posttype' );
+
+}
+
+new WP_Action_Banner();
+
+function my_custom_init(){
+    register_post_type('book', array(
+        'labels'             => array(
+            'name'               => 'Книги', // Основное название типа записи
+            'singular_name'      => 'Книга', // отдельное название записи типа Book
+            'add_new'            => 'Добавить новую',
+            'add_new_item'       => 'Добавить новую книгу',
+            'edit_item'          => 'Редактировать книгу',
+            'new_item'           => 'Новая книга',
+            'view_item'          => 'Посмотреть книгу',
+            'search_items'       => 'Найти книгу',
+            'not_found'          =>  'Книг не найдено',
+            'not_found_in_trash' => 'В корзине книг не найдено',
+            'parent_item_colon'  => '',
+            'menu_name'          => 'Книги'
+
+        ),
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => true,
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array('title','editor','author','thumbnail','excerpt','comments')
+    ) );
+}
+add_action('init', 'my_custom_init');
