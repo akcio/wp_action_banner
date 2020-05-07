@@ -343,7 +343,7 @@ if (!function_exists('save_action_stickers_meta')) {
             update_post_meta(
                 $post_id,
                 'slides',
-                json_encode(json_decode(stripslashes($_POST['slides']))
+                json_encode(json_decode(stripslashes($_POST['slides'])))
             );
         }
     }
