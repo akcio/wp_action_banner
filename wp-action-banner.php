@@ -274,9 +274,6 @@ if (!function_exists('slides_meta')) {
         global $post;
         $custom = get_post_custom($post->ID);
         $slides = $custom["slides"][0];
-        if (empty($slides)) {
-            $slides = Array();
-        }
         ?>
         <p><label>Slides:</label><br/>
             <select id="select-input">
@@ -284,7 +281,10 @@ if (!function_exists('slides_meta')) {
             </select>
             <button><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
             <script>
-                var slides = <?php json_encode($slides)?>;
+                var slides = <?php json_encode(Array(
+                    'has_enithing' => !empty($slides),
+                    'slides' => $slides)
+                )?>;
                 jQuery(function(){
                     console.log(slides);
                     console.log("OK");
