@@ -154,5 +154,70 @@ function my_custom_init(){
         'menu_position'      => null,
         'supports'           => array('custom-fields')
     ) );
+    register_taxonomy("Skills", array("book"), array("hierarchical" => true, "label" => "Skills", "singular_label" => "Skill", "rewrite" => true));
 }
 add_action('init', 'my_custom_init');
+
+add_action("admin_init", "admin_init");
+
+function admin_init(){
+    add_meta_box("year_completed-meta", "Year Completed", "year_completed", "portfolio", "side", "low");
+    add_meta_box("credits_meta", "Design & Build Credits", "credits_meta", "portfolio", "normal", "low");
+}
+
+function year_completed(){
+    global $post;
+    $custom = get_post_custom($post->ID);
+    $year_completed = $custom["year_completed"][0];
+    ?>
+    <label>Year:</label>
+    <input name="year_completed" value="<?php echo $year_completed; ?>" />
+    <?php
+}
+
+function credits_meta() {
+    global $post;
+    $custom = get_post_custom($post->ID);
+    $designers = $custom["designers"][0];
+    $developers = $custom["developers"][0];
+    $producers = $custom["producers"][0];
+    ?>
+    <p><label>Designed By:</label><br />
+        <textarea cols="50" rows="5" name="designers"><?php echo $designers; ?></textarea></p>
+    <p><label>Built By:</label><br />
+        <textarea cols="50" rows="5" name="developers"><?php echo $developers; ?></textarea></p>
+    <p><label>Produced By:</label><br />
+        <textarea cols="50" rows="5" name="producers"><?php echo $producers; ?></textarea></p>
+    <?php
+}
+
+add_action("manage_posts_custom_column",  "portfolio_custom_columns");
+add_filter("manage_edit-portfolio_columns", "portfolio_edit_columns");
+
+function portfolio_edit_columns($columns){
+    $columns = array(
+        "cb" => "<input type="checkbox" />",
+    "title" => "Portfolio Title",
+    "description" => "Description",
+    "year" => "Year Completed",
+    "skills" => "Skills",
+  );
+
+  return $columns;
+}
+function portfolio_custom_columns($column){
+    global $post;
+
+    switch ($column) {
+        case "description":
+            the_excerpt();
+            break;
+        case "year":
+            $custom = get_post_custom();
+            echo $custom["year_completed"][0];
+            break;
+        case "skills":
+            echo get_the_term_list($post->ID, 'Skills', '', ', ','');
+            break;
+    }
+}
