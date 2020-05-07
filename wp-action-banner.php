@@ -299,24 +299,23 @@ if (!function_exists('slides_meta')) {
                     });
                     var o = new Option(optionName, slides.length);
                     jQuery(o).html(optionName);
-                    jQuery('#select-input').append(o);
+                    var selectInput = jQuery('#select-input');
+                    selectInput.append(o);
                     if (lastSlideLength == 0) {
-                        onChangeSlideSelect();
+                        selectInput.change();
                     }
                     lastSlideLength = slides.length;
                     return false;
                 }
 
                 function onRemoveSlide() {
-                    if (this.val == currentSlide) {
-                        console.log("YES")
-                    }
+                    //TODO: IGOR
                     return false;
                 }
 
                 function onChangeSlideSelect() {
                     console.log("Change");
-                    console.log(this);
+                    console.log(this.val());
                 }
 
                 jQuery(function(){
