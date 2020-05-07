@@ -279,8 +279,11 @@ if (!function_exists('slides_meta')) {
         }
         ?>
         <p><label>Slides:</label><br/>
+            <input id="slides-input" type="hidden" name="slides"/>
             <select id="select-input">
-
+            <?php foreach ($slides as $num => $slide): ?>
+                <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
+            <?php endforeach; ?>
             </select>
             <button id="add-slide"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
             <button id="remove-slide"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
@@ -305,6 +308,7 @@ if (!function_exists('slides_meta')) {
                         selectInput.change();
                     }
                     lastSlideLength = slides.length;
+                    jQuery('#slides-input').val(JSON.stringify(slides));
                     return false;
                 }
 
