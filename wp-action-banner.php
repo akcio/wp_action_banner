@@ -294,6 +294,11 @@ if (!function_exists('slides_meta')) {
             </textarea>
             <input type="text" id="slide-image">
             <button id="save-slide"><?php echo __('Save slide', 'plugin-action-banner')?></button>
+            <br>
+            <div id="slide-buttons"></div><br>
+            <input type="text" id="slide-buttons-key"/>
+            <input type="text" id="slide-button-value"/>
+            <button id="add-slide-button"><?php echo __('Add button', 'plugin-action-banner');?></button>
 
             <script>
                 var slides = <?php echo json_encode($slides);?>;
@@ -347,6 +352,7 @@ if (!function_exists('slides_meta')) {
                     jQuery('#slide-title').val(slides[currentSlide].title);
                     jQuery('#slide-text').val(slides[currentSlide].text)
                     jQuery('#slide-image').val(slides[currentSlide].image);
+                    jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
                     //TODO: buttons
                 }
 
@@ -357,6 +363,15 @@ if (!function_exists('slides_meta')) {
                     slides[currentSlide].image = sanitize(jQuery('#slide-image').val());
                     jQuery('#slides-input').val(JSON.stringify(slides));
                     return false;
+                }
+
+                function onClickAddButton() {
+                    var key = jQuery('#slide-buttons-key').val();
+                    var value = jQuery('#slide-button-value').val();
+                    slides[currentSlide].buttons[key] = value;
+                    jQuery('#slide-buttons-key').val("");
+                    jQuery('#slide-button-value').val("");
+                    jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
                 }
 
                 jQuery(function(){
