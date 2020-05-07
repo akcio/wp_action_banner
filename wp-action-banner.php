@@ -290,14 +290,22 @@ if (!function_exists('slides_meta')) {
                     console.log("OK");
 
                     jQuery('#add-slide').click(function(){
-                        var o = new Option("<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length, slides.length);
-                        jQuery(o).html("<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length);
+                        var optionName = "<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length;
+                        slides.push({
+                            title: optionName,
+                            text: "",
+                            buttons: {},
+                            image: ""
+                        });
+                        var o = new Option(optionName, slides.length);
+                        jQuery(o).html(optionName);
                         jQuery('#select-input').append(o);
                         return false;
                     });
 
                     jQuery('#select-input').change(function(){
                         console.log("Change");
+                        console.log(this);
                     });
                 });
             </script>
