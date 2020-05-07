@@ -319,7 +319,7 @@ if (!function_exists('slides_meta')) {
 
                 function onChangeSlideSelect() {
                     console.log("Change");
-                    console.log(this.val());
+                    console.log(jQuery(this).val());
                 }
 
                 jQuery(function(){
