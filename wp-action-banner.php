@@ -300,10 +300,23 @@ if (!function_exists('slides_meta')) {
                 var lastSlideLength = slides.length;
                 var currentSlide = 0;
 
+                function sanitize(string) {
+                    const map = {
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        '"': '&quot;',
+                        "'": '&#x27;',
+                        "/": '&#x2F;',
+                    };
+                    const reg = /[&<>"'/]/ig;
+                    return string.replace(reg, (match)=>(map[match]));
+                }
+
                 function onClickAddSlide() {
                     var optionName = "<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length;
                     slides.push({
-                        title: optionName,
+                        title: sanitize(optionName),
                         text: "",
                         buttons: {},
                         image: ""
@@ -335,9 +348,10 @@ if (!function_exists('slides_meta')) {
                 }
 
                 function onClickSaveSlide() {
-                    slides[currentSlide].title = jQuery('#slide-title').val();
-                    slides[currentSlide].text = jQuery('#slide-text').val()
-                    slides[currentSlide].image = jQuery('#slide-image').val();
+
+                    slides[currentSlide].title = sanitize(jQuery('#slide-title').val());
+                    slides[currentSlide].text = sanitize(jQuery('#slide-text').val());
+                    slides[currentSlide].image = sanitize(jQuery('#slide-image').val());
                     jQuery('#slides-input').val(JSON.stringify(slides));
                     return false;
                 }
