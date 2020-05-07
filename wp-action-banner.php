@@ -372,6 +372,7 @@ if (!function_exists('slides_meta')) {
                     jQuery('#slide-buttons-key').val("");
                     jQuery('#slide-button-value').val("");
                     jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
+                    return false;
                 }
 
                 jQuery(function(){
@@ -382,6 +383,7 @@ if (!function_exists('slides_meta')) {
                     jQuery('#select-input').change(onChangeSlideSelect);
                     jQuery('#remove-slide').click(onRemoveSlide);
                     jQuery('#save-slide').click(onClickSaveSlide);
+                    jQuery('#add-slide-button').click(onClickAddButton);
                 });
             </script>
         <?php
