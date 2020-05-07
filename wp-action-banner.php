@@ -276,7 +276,17 @@ if (!function_exists('slides_meta')) {
         $slides = $custom["slides"][0];
         ?>
         <p><label>Slides:</label><br/>
-            <textarea cols="50" rows="5" name="designers"><?php echo $slides; ?></textarea></p>
+            <select id="select-input">
+
+            </select>
+            <button><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
+            <script>
+                var slides = <?php json_encode($slides)?>;
+                jQuery(function(){
+                    console.log(slides);
+                    console.log("OK");
+                });
+            </script>
         <?php
     }
 }
