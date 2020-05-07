@@ -340,6 +340,9 @@ if (!function_exists('slides_meta')) {
 
                 function onChangeSlideSelect() {
                     var itemNumber = jQuery(this).val();
+                    if (itemNumber >= slides.length) {
+                        return;
+                    }
                     currentSlide = itemNumber;
                     jQuery('#slide-title').val(slides[currentSlide].title);
                     jQuery('#slide-text').val(slides[currentSlide].text)
