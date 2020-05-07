@@ -152,7 +152,7 @@ function my_custom_init(){
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => null,
-        'supports'           => array('custom-fields')
+        'supports'           => array('custom-fields','title', 'editor', 'thumbnail')
     ) );
     register_taxonomy("Skills", array("book"), array("hierarchical" => true, "label" => "Skills", "singular_label" => "Skill", "rewrite" => true));
 }
