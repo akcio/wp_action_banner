@@ -335,3 +335,18 @@ if (!function_exists('slides_meta')) {
         <?php
     }
 }
+
+if (!function_exists('save_action_stickers_meta')) {
+    function save_action_stickers_meta($post_id)
+    {
+        if (!empty($_POST['slides'])) {
+            update_post_meta(
+                $post_id,
+                'slides',
+                json_decode($_POST['slides'])
+            );
+        }
+    }
+}
+
+add_action('save_post', 'save_action_stickers_meta');
