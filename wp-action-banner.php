@@ -196,7 +196,7 @@ add_filter("manage_edit-portfolio_columns", "portfolio_edit_columns");
 
 function portfolio_edit_columns($columns){
     $columns = array(
-        "cb" => "<input type="checkbox" />",
+        "cb" => "<input type=\"checkbox\" />",
     "title" => "Portfolio Title",
     "description" => "Description",
     "year" => "Year Completed",
