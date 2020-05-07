@@ -279,8 +279,7 @@ if (!function_exists('slides_meta')) {
         }
         ?>
         <p><label>Slides:</label><br/>
-            <input id="slides-input" type="hidden" name="slides" value=""/>
-            <?php echo $slides;?>
+            <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
             <select id="select-input">
             <?php foreach ($slides as $num => $slide): ?>
                 <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
@@ -288,6 +287,14 @@ if (!function_exists('slides_meta')) {
             </select>
             <button id="add-slide"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
             <button id="remove-slide"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
+            <br>
+            <input type="text" id="slide-title">
+            <textarea id="slide-text">
+
+            </textarea>
+            <input type="text" id="slide-image">
+            <button id="save-slide"><?php echo __('Save slide', 'plugin-action-banner')?></button>
+
             <script>
                 var slides = <?php echo json_encode($slides);?>;
                 var lastSlideLength = slides.length;
@@ -319,8 +326,20 @@ if (!function_exists('slides_meta')) {
                 }
 
                 function onChangeSlideSelect() {
-                    console.log("Change");
-                    console.log(jQuery(this).val());
+                    var itemNumber = jQuery(this).val();
+                    currentSlide = itemNumber;
+                    jQuery('#slide-title').val(slides[currentSlide].title);
+                    jQuery('#slide-text').val(slides[currentSlide].text)
+                    jQuery('#slide-image').val(slides[currentSlide].image);
+                    //TODO: buttons
+                }
+
+                function onClickSaveSlide() {
+                    slides[currentSlide].title = jQuery('#slide-title').val();
+                    slides[currentSlide].text = jQuery('#slide-text').val()
+                    slides[currentSlide].image = jQuery('#slide-image').val();
+                    jQuery('#slides-input').val(JSON.stringify(slides));
+                    return false;
                 }
 
                 jQuery(function(){
@@ -330,6 +349,7 @@ if (!function_exists('slides_meta')) {
                     jQuery('#add-slide').click(onClickAddSlide);
                     jQuery('#select-input').change(onChangeSlideSelect);
                     jQuery('#remove-slide').click(onRemoveSlide);
+                    jQuery('#save-slide').click(onClickSaveSlide);
                 });
             </script>
         <?php
