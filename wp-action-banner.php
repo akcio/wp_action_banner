@@ -274,6 +274,9 @@ if (!function_exists('slides_meta')) {
         global $post;
         $custom = get_post_custom($post->ID);
         $slides = $custom["slides"][0];
+        if (empty($slides)) {
+            $slides = Array();
+        }
         ?>
         <p><label>Slides:</label><br/>
             <select id="select-input">
