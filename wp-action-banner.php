@@ -283,30 +283,49 @@ if (!function_exists('slides_meta')) {
 
             </select>
             <button id="add-slide"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
+            <button id="remove-slide"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
             <script>
                 var slides = <?php echo json_encode($slides);?>;
+                var lastSlideLength = slides.length;
+                var currentSlide = 0;
+
+                function onClickAddSlide() {
+                    var optionName = "<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length;
+                    slides.push({
+                        title: optionName,
+                        text: "",
+                        buttons: {},
+                        image: ""
+                    });
+                    var o = new Option(optionName, slides.length);
+                    jQuery(o).html(optionName);
+                    jQuery('#select-input').append(o);
+                    if (lastSlideLength == 0) {
+                        onChangeSlideSelect();
+                    }
+                    lastSlideLength = slides.length;
+                    return false;
+                }
+
+                function onRemoveSlide() {
+                    if (this.val == currentSlide) {
+                        console.log("YES")
+                    }
+                    return false;
+                }
+
+                function onChangeSlideSelect() {
+                    console.log("Change");
+                    console.log(this);
+                }
+
                 jQuery(function(){
                     console.log(slides);
                     console.log("OK");
 
-                    jQuery('#add-slide').click(function(){
-                        var optionName = "<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length;
-                        slides.push({
-                            title: optionName,
-                            text: "",
-                            buttons: {},
-                            image: ""
-                        });
-                        var o = new Option(optionName, slides.length);
-                        jQuery(o).html(optionName);
-                        jQuery('#select-input').append(o);
-                        return false;
-                    });
-
-                    jQuery('#select-input').change(function(){
-                        console.log("Change");
-                        console.log(this);
-                    });
+                    jQuery('#add-slide').click(onClickAddSlide);
+                    jQuery('#select-input').change(onChangeSlideSelect);
+                    jQuery('#remove-slide').click(onRemoveSlide);
                 });
             </script>
         <?php
