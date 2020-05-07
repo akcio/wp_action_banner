@@ -273,7 +273,7 @@ if (!function_exists('slides_meta')) {
     {
         global $post;
         $custom = get_post_custom($post->ID);
-        $slides = json_decode($custom["slides"][0]);
+        $slides = json_decode($custom["slides"][0], true);
         if (empty($slides)) {
             $slides = Array();
         }
@@ -343,7 +343,7 @@ if (!function_exists('save_action_stickers_meta')) {
             update_post_meta(
                 $post_id,
                 'slides',
-                json_encode(json_decode(stripslashes($_POST['slides'])))
+                json_decode(stripslashes($_POST['slides']), true)
             );
         }
     }
