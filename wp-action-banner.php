@@ -281,10 +281,7 @@ if (!function_exists('slides_meta')) {
             </select>
             <button><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
             <script>
-                var slides = <?php json_encode(Array(
-                    'has_enithing' => !empty($slides),
-                    'slides' => $slides)
-                )?>;
+                var slides = <?php echo json_encode($slides);?>;
                 jQuery(function(){
                     console.log(slides);
                     console.log("OK");
