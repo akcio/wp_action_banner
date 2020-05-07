@@ -315,13 +315,13 @@ if (!function_exists('slides_meta')) {
 
                 function onClickAddSlide() {
                     var optionName = "<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length;
+                    var o = new Option(optionName, slides.length);
                     slides.push({
                         title: sanitize(optionName),
                         text: "",
                         buttons: {},
                         image: ""
                     });
-                    var o = new Option(optionName, slides.length);
                     jQuery(o).html(optionName);
                     var selectInput = jQuery('#select-input');
                     selectInput.append(o);
