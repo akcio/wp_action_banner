@@ -339,6 +339,8 @@ if (!function_exists('slides_meta')) {
 if (!function_exists('save_action_stickers_meta')) {
     function save_action_stickers_meta($post_id)
     {
+        print_r($_POST);
+        exit(1);
         if (!empty($_POST['slides'])) {
             update_post_meta(
                 $post_id,
