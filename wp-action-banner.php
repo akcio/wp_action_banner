@@ -273,7 +273,7 @@ if (!function_exists('slides_meta')) {
     {
         global $post;
         $custom = get_post_custom($post->ID);
-        $slides = $custom["slides"][0];
+        $slides = json_decode($custom["slides"][0]);
         if (empty($slides)) {
             $slides = Array();
         }
