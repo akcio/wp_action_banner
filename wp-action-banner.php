@@ -3,8 +3,9 @@
 Plugin Name: Action Banner
 Plugin Script: wp-action-banner.php
 Description: Allows you to create custom banners, which consist of an image, text, a link, and a call to action.  Custom banners are easily output via shortcodes.
-Version: 0.1.1
+Version: 0.1.2
 Author: Разработчики занаклейкой.рф
+Text Domain: plugin-action-banner
 */
 
 defined( 'ABSPATH' ) or die( 'Nope, not accessing this' );
@@ -220,5 +221,62 @@ function portfolio_custom_columns($column){
         case "skills":
             echo get_the_term_list($post->ID, 'Skills', '', ', ','');
             break;
+    }
+}
+
+if (!function_exists('init_action_banners')) {
+    function init_action_banners()
+    {
+        register_post_type('action_banner', array(
+            'labels' => array(
+                'name' => __('Banners', 'plugin-action-banner'), // Основное название типа записи
+                'singular_name' => __('Banner', 'plugin-action-banner'), // отдельное название записи типа Book
+                'add_new' => __('Add new', 'plugin-action-banner'),
+                'add_new_item' => __('Add new banner', 'plugin-action-banner'),
+                'edit_item' => __('Edit banner', 'plugin-action-banner'),
+                'new_item' => __('New banner', 'plugin-action-banner'),
+                'view_item' => __('View banner', 'plugin-action-banner'),
+                'search_items' => __('Find banner', 'plugin-action-banner'),
+                'not_found' => __('Banners not found', 'plugin-action-banner'),
+                'not_found_in_trash' => __('Not found banners in trash', 'plugin-action-banner'),
+                'parent_item_colon' => '',
+                'menu_name' => __('Action Banners', 'plugin-action-banner')
+            ),
+            'public' => true,
+            'publicly_queryable' => true,
+            'show_ui' => true,
+            'show_in_menu' => true,
+            'query_var' => true,
+            'rewrite' => true,
+            'capability_type' => 'post',
+            'has_archive' => false,
+            'hierarchical' => false,
+            'menu_position' => null,
+            'supports' => array('thumbnail')
+        ));
+    }
+}
+
+add_action('init', 'init_action_banners');
+
+add_action("admin_init", "admin_init_action_banners");
+
+if (!function_exists('admin_init_action_banners')) {
+    function admin_init_action_banners()
+    {
+        add_meta_box("slides-meta", __("Slides", 'plugin-action-banner'), "slides_meta", "action_banner", "normal", "low");
+    }
+}
+
+if (!function_exists('slides_meta')) {
+    function slides_meta()
+    {
+        global $post;
+        $custom = get_post_custom($post->ID);
+        $slides = $custom["slides"][0];
+        ?>
+        <p><label>Slides:</label><br/>
+            <textarea cols="50" rows="5" name="designers"><?php echo $slides; ?></textarea></p>
+        <?php
     }
 }
