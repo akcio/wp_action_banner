@@ -273,13 +273,14 @@ if (!function_exists('slides_meta')) {
     {
         global $post;
         $custom = get_post_custom($post->ID);
-        $slides = json_decode($custom["slides"][0]);
+        $slides = $custom["slides"][0];
         if (empty($slides)) {
             $slides = Array();
         }
         ?>
         <p><label>Slides:</label><br/>
-            <input id="slides-input" type="hidden" name="slides"/>
+            <input id="slides-input" type="hidden" name="slides" value=""/>
+            <?php echo $slides;?>
             <select id="select-input">
             <?php foreach ($slides as $num => $slide): ?>
                 <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
