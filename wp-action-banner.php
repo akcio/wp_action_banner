@@ -292,7 +292,8 @@ if (!function_exists('slides_meta')) {
                     jQuery('#add-slide').click(function(){
                         var o = new Option("<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length, slides.length);
                         jQuery(o).html("<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length);
-                        this.append(o);
+                        jQuery('#select-input').append(o);
+                        return false;
                     });
 
                     jQuery('#select-input').change(function(){
