@@ -340,6 +340,7 @@ if (!function_exists('save_action_stickers_meta')) {
     function save_action_stickers_meta($post_id)
     {
         print_r($_POST);
+        print_r(json_decode($_POST['slides']));
         exit(1);
         if (!empty($_POST['slides'])) {
             update_post_meta(
