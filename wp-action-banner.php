@@ -275,7 +275,7 @@ if (!function_exists('slides_meta')) {
         $custom = get_post_custom($post->ID);
         $slides = $custom["slides"][0];
         if (empty($slides)) {
-            $slides = Array();
+            $slides = Array('items' => Array());
         }
         ?>
         <p><label>Slides:</label><br/>
@@ -301,7 +301,7 @@ if (!function_exists('slides_meta')) {
         <button id="add-slide-button"><?php echo __('Add button', 'plugin-action-banner');?></button>
 
         <script>
-            var slides = <?php echo json_encode($slides);?>;
+            var slides = <?php echo json_encode($slides['items']);?>;
             var lastSlideLength = slides.length;
             var currentSlide = 0;
 
