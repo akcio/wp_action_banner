@@ -281,7 +281,7 @@ if (!function_exists('slides_meta')) {
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
             <select id="select-input">
-                <?php foreach ($slides as $num => $slide): ?>
+                <?php foreach ($slides['items'] as $num => $slide): ?>
                     <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
                 <?php endforeach; ?>
             </select>
