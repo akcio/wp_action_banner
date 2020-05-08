@@ -441,6 +441,8 @@ if (!function_exists('save_action_stickers_meta')) {
         if ($post_type != 'action_banner') {
             return;
         }
+        print_r($_POST['slides']);
+        exit(1);
         if (!empty($_POST['slides'])) {
             $json_encoded = str_replace('\\"', '"', $_POST['slides']);
 
