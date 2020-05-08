@@ -468,7 +468,7 @@ if (!function_exists('action_banner_shortcode')) {
 
 
         if( ! $post = get_post( $rg->id ) )
-            return 'КОНСКАЯ ЗАЛУПА НА ВЕСЬ ЭКРАН';
+            return '';
 
         $custom = get_post_custom($post->ID);
         $slides = $custom["slides"][0];
@@ -498,10 +498,8 @@ if (!function_exists('action_banner_shortcode')) {
         </div>
         ';
         }
-        print_r($out);
-        exit(1);
         return $out;
     }
 }
 
-add_shortcode('action_banner', 'action_banner_shortcode');
+add_shortcode('action_banner_papapapapapa', 'action_banner_shortcode');
