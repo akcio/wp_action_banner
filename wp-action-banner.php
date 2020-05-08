@@ -466,11 +466,9 @@ if (!function_exists('action_banner_shortcode')) {
             'id' => null
         ], $atts );
 
-        print_r($rg);
-        exit(1);
 
         if( ! $post = get_post( $rg->id ) )
-            return '';
+            return 'КОНСКАЯ ЗАЛУПА НА ВЕСЬ ЭКРАН';
 
         $custom = get_post_custom($post->ID);
         $slides = $custom["slides"][0];
