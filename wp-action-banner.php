@@ -497,6 +497,8 @@ if (!function_exists('action_banner_shortcode')) {
         </div>
         ';
         }
+        print_r($out);
+        exit(1);
         return $out;
     }
 }
