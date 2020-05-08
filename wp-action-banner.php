@@ -106,21 +106,28 @@ if (!function_exists('admin_init_action_banners')) {
 add_action("manage_posts_custom_column",  "action_banner_custom_columns");
 add_filter("manage_edit-action_banner_columns", "action_banner_edit_columns");
 
-function action_banner_edit_columns($columns){
-    $columns["shortcode"] =__("Shortcode", 'plugin-action-banner');
+if (!function_exists('action_banner_edit_columns')) {
+    function action_banner_edit_columns($columns)
+    {
+        $columns["shortcode"] = __("Shortcode", 'plugin-action-banner');
 
-    return $columns;
-}
-function action_banner_custom_columns($column){
-    global $post;
-    $post_type = get_post_type( $post->ID );
-    if ($post_type != 'action_banner') {
-        return;
+        return $columns;
     }
-    switch ($column) {
-        case "shortcode":
-            echo '[action_banner id="'. $post->ID . '"]';
-            break;
+}
+
+if (!function_exists('action_banner_custom_columns')) {
+    function action_banner_custom_columns($column)
+    {
+        global $post;
+        $post_type = get_post_type($post->ID);
+        if ($post_type != 'action_banner') {
+            return;
+        }
+        switch ($column) {
+            case "shortcode":
+                echo '[action_banner id="' . $post->ID . '"]';
+                break;
+        }
     }
 }
 
