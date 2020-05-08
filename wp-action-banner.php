@@ -357,6 +357,7 @@ if (!function_exists('slides_meta')) {
                     jQuery('#add-slide-button').hide();
                     jQuery('#slide-buttons-key').hide();
                     jQuery('#slide-button-value').hide();
+                    jQuery('#save-slide').hide();
                     return;
                 }
                 currentSlide = itemNumber;
@@ -367,6 +368,7 @@ if (!function_exists('slides_meta')) {
                 jQuery('#add-slide-button').show();
                 jQuery('#slide-buttons-key').show();
                 jQuery('#slide-button-value').show();
+                jQuery('#save-slide').show();
                 //TODO: buttons
             }
 
