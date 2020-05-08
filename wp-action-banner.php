@@ -274,9 +274,9 @@ if (!function_exists('slides_meta')) {
         global $post;
         $custom = get_post_custom($post->ID);
         $slides = $custom["slides"][0];
-        print_r($slides);
-        print_r($slides['items']);
-        exit(1);
+//        print_r($slides);
+//        print_r($slides['items']);
+//        exit(1);
         if (empty($slides)) {
             $slides = Array('items' => Array());
         }
