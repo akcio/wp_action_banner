@@ -283,29 +283,28 @@ if (!function_exists('slides_meta')) {
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
             <select id="select-input">
+                <option value="-1"><?php echo __('Please select slide', 'plugin-action-banner');?></option>
                 <?php foreach ($slides['items'] as $num => $slide): ?>
                     <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
                 <?php endforeach; ?>
             </select>
             <button id="add-slide"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
-            <button id="remove-slide"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
+            <button id="remove-slide" style="display: none;"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
             <br>
-            <input type="text" id="slide-title">
-            <textarea id="slide-text">
-
-            </textarea>
-            <input type="text" id="slide-image">
-            <button id="save-slide"><?php echo __('Save slide', 'plugin-action-banner')?></button>
+            <input type="text" id="slide-title" style="display: none;">
+            <textarea id="slide-text" style="display: none;"></textarea>
+            <input type="text" id="slide-image" style="display: none;">
+            <button id="save-slide" style="display: none;"><?php echo __('Save slide', 'plugin-action-banner')?></button>
             <br>
         <div id="slide-buttons"></div><br>
-        <input type="text" id="slide-buttons-key"/>
-        <input type="text" id="slide-button-value"/>
-        <button id="add-slide-button"><?php echo __('Add button', 'plugin-action-banner');?></button>
+        <input type="text" id="slide-buttons-key" style="display: none;"/>
+        <input type="text" id="slide-button-value" style="display: none;"/>
+        <button id="add-slide-button" style="display: none;"><?php echo __('Add button', 'plugin-action-banner');?></button>
 
         <script>
             var slides = <?php echo json_encode($slides['items']);?>;
             var lastSlideLength = slides.length;
-            var currentSlide = 0;
+            var currentSlide = -1;
 
             function sanitize(string) {
                 const map = {
@@ -323,6 +322,9 @@ if (!function_exists('slides_meta')) {
             function onClickAddSlide() {
                 var optionName = "<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length;
                 var o = new Option(optionName, slides.length);
+                if (lastSlideLength == 0) {
+                    o.selected = true;
+                }
                 slides.push({
                     title: sanitize(optionName),
                     text: "",
@@ -347,14 +349,14 @@ if (!function_exists('slides_meta')) {
 
             function onChangeSlideSelect() {
                 var itemNumber = jQuery(this).val();
-                if (itemNumber >= slides.length) {
+                if (itemNumber >= slides.length || itemNumber < 0) {
                     return;
                 }
                 currentSlide = itemNumber;
-                jQuery('#slide-title').val(slides[currentSlide].title);
-                jQuery('#slide-text').val(slides[currentSlide].text)
-                jQuery('#slide-image').val(slides[currentSlide].image);
-                jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
+                jQuery('#slide-title').val(slides[currentSlide].title).show();
+                jQuery('#slide-text').val(slides[currentSlide].text).show();
+                jQuery('#slide-image').val(slides[currentSlide].image).show();
+                jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons)).show();
                 //TODO: buttons
             }
 
