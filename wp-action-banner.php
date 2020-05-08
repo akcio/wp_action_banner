@@ -280,7 +280,7 @@ if (!function_exists('slides_meta')) {
             $slides = json_decode($slides, true);
         }
         ?>
-        <p><?php echo __('You can use this shortcode to insert banner')?>[action_banner_shortcode id="<?php echo get_the_ID();?>"]</p>
+        <p><?php echo __('You can use this shortcode to insert banner')?>[action_banner id="<?php echo get_the_ID();?>"]</p>
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
             <select id="select-input">
@@ -460,10 +460,16 @@ add_action('save_post', 'save_action_stickers_meta');
 if (!function_exists('action_banner_shortcode')) {
     function action_banner_shortcode($atts)
     {
-        if (empty($atts['id'])) {
+        global $post;
+
+        $rg = (object) shortcode_atts( [
+            'id' => null
+        ], $atts );
+
+        if( ! $post = get_post( $rg->id ) )
             return '';
-        }
-        $custom = get_post_custom($atts['id']);
+
+        $custom = get_post_custom($post->ID);
         $slides = $custom["slides"][0];
         if (empty($slides)) {
             $slides = Array('items' => Array());
