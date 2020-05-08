@@ -468,9 +468,10 @@ if (!function_exists('action_banner_shortcode')) {
 
 
         if( ! $post = get_post( $rg->id ) )
-            return 'RJY';
+            return '';
 
         $custom = get_post_custom($post->ID);
+        print_r($custom);
         $slides = $custom["slides"][0];
         if (empty($slides)) {
             $slides = Array('items' => Array());
