@@ -393,6 +393,10 @@ if (!function_exists('slides_meta')) {
 if (!function_exists('save_action_stickers_meta')) {
     function save_action_stickers_meta($post_id)
     {
+        $post_type = get_post_type( $post_id );
+        if ($post_type != 'action_banner') {
+            return;
+        }
         if (!empty($_POST['slides'])) {
             update_post_meta(
                 $post_id,
