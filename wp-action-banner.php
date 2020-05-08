@@ -280,7 +280,7 @@ if (!function_exists('slides_meta')) {
             $slides = json_decode($slides, true);
         }
         ?>
-        <p><?php echo get_the_ID();?></p>
+        <p><?php echo __('You can use this shortcode to insert banner')?>[action_banner_shortcode id="<?php echo get_the_ID();?>"]</p>
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
             <select id="select-input">
@@ -455,3 +455,42 @@ if (!function_exists('save_action_stickers_meta')) {
 }
 
 add_action('save_post', 'save_action_stickers_meta');
+
+if (!function_exists('action_banner_shortcode')) {
+    function action_banner_shortcode($atts)
+    {
+        if (empty($atts['id'])) {
+            return '';
+        }
+        $custom = get_post_custom($atts['id']);
+        $slides = $custom["slides"][0];
+        if (empty($slides)) {
+            $slides = Array('items' => Array());
+        } else {
+            $slides = json_decode($slides, true);
+        }
+        $out = '';
+        foreach ($slides as $slide) {
+            $img = $slide['image'];
+            $header = $slide['title'];
+            $text = $slide['text'];
+            $buttons = $slide['buttons'];
+            $out .= '
+        <div class="action-banner" style="background-image: url(' . $img . ');">
+        	<div class="ab-wrapper">
+                <div class="ab-header">' . $header . '</div>
+                <div class="ab-text">' . $text . '</div>
+                <div class="ab-buttons">';
+            foreach ($buttons as $name => $link) {
+                $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>';
+            }
+            $out .= '
+                </div>
+            </div>
+        </div>
+        ';
+        }
+        return $out;
+    }
+}
+add_shortcode('action_banner', 'action_banner_shortcode');
