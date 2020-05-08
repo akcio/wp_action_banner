@@ -398,6 +398,8 @@ if (!function_exists('save_action_stickers_meta')) {
             return;
         }
         print_r($_POST);
+        print_r(json_decode($_POST['slides']));
+        echo '1---';
         exit(1);
         if (!empty($_POST['slides'])) {
             update_post_meta(
