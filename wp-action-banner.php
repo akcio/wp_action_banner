@@ -273,7 +273,7 @@ if (!function_exists('slides_meta')) {
     {
         global $post;
         $custom = get_post_custom($post->ID);
-        $slides = json_decode($custom["slides"][0], true);
+        $slides = $custom["slides"][0];
         if (empty($slides)) {
             $slides = Array();
         }
@@ -397,16 +397,14 @@ if (!function_exists('save_action_stickers_meta')) {
         if ($post_type != 'action_banner') {
             return;
         }
-        print_r($_POST);
-        $bodytag = str_replace('\\"', '"', $_POST['slides']);
-        print_r(json_decode($bodytag));
-        echo '1---';
-        exit(1);
         if (!empty($_POST['slides'])) {
+            $json_encoded = str_replace('\\"', '"', $_POST['slides']);
+
+
             update_post_meta(
                 $post_id,
                 'slides',
-                json_encode(json_decode(stripslashes($_POST['slides']), true))
+                json_decode($json_encoded, true)
             );
         }
     }
