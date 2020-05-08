@@ -278,6 +278,7 @@ if (!function_exists('slides_meta')) {
             $slides = Array();
         }
         ?>
+        <form method="post">
         <p><label>Slides:</label><br/>
 
             <?php foreach ($slides as $num => $slide): ?>
@@ -288,7 +289,7 @@ if (!function_exists('slides_meta')) {
                 </div>
             <?php endforeach; ?>
             <button name="action[add_slide]" type="submit" value="new"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
-
+        </form>
             <script>
                 var slides = <?php echo json_encode($slides);?>;
                 var lastSlideLength = slides.length;
