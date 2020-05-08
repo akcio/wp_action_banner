@@ -115,10 +115,10 @@ function action_banner_edit_columns($columns){
 }
 function action_banner_custom_columns($column){
     global $post;
-    $post_type = get_post_type( $post->ID );
-    if ($post_type != 'action_banner') {
-        return;
-    }
+//    $post_type = get_post_type( $post->ID );
+//    if ($post_type != 'action_banner') {
+//        return;
+//    }
     switch ($column) {
         case "shortcode":
             echo '[action_banner id="'. $post->ID . '"]';
