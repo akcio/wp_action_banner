@@ -3,7 +3,7 @@
 Plugin Name: Action Banner
 Plugin Script: wp-action-banner.php
 Description: Allows you to create custom banners, which consist of an image, text, a link, and a call to action.  Custom banners are easily output via shortcodes.
-Version: 0.1.80
+Version: 0.1.85
 Author: Разработчики занаклейкой.рф
 Text Domain: plugin-action-banner
 */
@@ -16,23 +16,6 @@ class WP_Action_Banner{
     public function __construct()
     {
         add_action('plugins_loaded', array($this, 'init_texdomain'));
-
-        //add single shortcode metabox to banner add/edit screen
-//        add_action( 'admin_menu', array($this,'add_meta_boxes')); // add our custom meta boxes
-//        add_action( 'admin_menu', array($this,'add_settings_link')); // add a link to the settings page under the banners menu
-//
-//        // add media buttons to admin
-//        $cur_post_type = ( isset($_GET['post']) ? get_post_type(intval($_GET['post'])) : '' );
-//        if( is_admin() && ( empty($_REQUEST['post_type']) || $_REQUEST['post_type'] !== 'banner' ) && ($cur_post_type !== 'banner') )
-//        {
-////            global $CustomBanners_MediaButton;
-////            $banner_shortcode = get_option("custom_banners_banner_shortcode", 'banner');
-////
-////            $CustomBanners_MediaButton = new Gold_Plugins_Media_Button('Banners', 'images-alt');
-////            $CustomBanners_MediaButton->add_button('Single Banner Widget', $banner_shortcode, 'singlebannerwidget', 'images-alt');
-////            $CustomBanners_MediaButton->add_button('List of Banners Widget', $banner_shortcode, 'bannerlistwidget', 'images-alt');
-////            $CustomBanners_MediaButton->add_button('Rotating Banner Widget',  $banner_shortcode, 'rotatingbannerwidget', 'images-alt');
-//        }
     }
 
     public function init_texdomain() {
@@ -40,158 +23,10 @@ class WP_Action_Banner{
         load_textdomain( 'action-banner', $mo_file_path );
         load_plugin_textdomain('action-banner', false, dirname(plugin_basename(__FILE__)).'/languages/' );
     }
-
-//    function create_post_types()
-//    {
-//        $postType = array(
-//            'name' => 'Banner',
-//            'plural' => 'Banners',
-//            'slug' => 'banners',
-//            'menu_icon' => 'dashicons-images-alt'
-//        );
-//
-//        $customFields = array();
-//        $customFields[] = array('name' => 'target_url', 'title' => 'Target URL', 'description' => 'Where a user should be sent when they click on the banner or the call to action button', 'type' => 'text');
-//        $customFields[] = array('name' => 'cta_text', 'title' => 'Call To Action Text', 'description' => 'The "Call To Action" (text) of the button. Leave this field blank to hide the call to action button.', 'type' => 'text');
-//        $customFields[] = array('name' => 'css_class', 'title' => 'CSS Class', 'description' => 'Any extra CSS classes that you would like applied to this banner.', 'type' => 'text');
-//        $this->add_custom_post_type($postType, $customFields);
-//
-//        //load list of current posts that have featured images
-//        $supportedTypes = get_theme_support( 'post-thumbnails' );
-//
-//        //none set, add them just to our type
-//        if( $supportedTypes === false ){
-//            add_theme_support( 'post-thumbnails', array( 'banner' ) );
-//            //for the banner images
-//        }
-//        //specifics set, add our to the array
-//        elseif( is_array( $supportedTypes ) ){
-//            $supportedTypes[0][] = 'banner';
-//            add_theme_support( 'post-thumbnails', $supportedTypes[0] );
-//            //for the banner images
-//        }
-//
-//        //move featured image box to main column
-//        add_action('add_meta_boxes', array($this,'custom_banner_edit_screen'));
-//
-//        //remove unused meta boxes
-//        add_action( 'admin_init', array($this,'custom_banners_unused_meta'));
-//
-//        // move the post editor under the other metaboxes
-//        add_action( 'add_meta_boxes', array($this, 'reposition_editor_metabox'), 0 );
-//
-//        // enforce correct order of metaboxes
-//        add_action('admin_init', array($this, 'set_metabox_order'));
-//    }
-//
-//    function register_taxonomies()
-//    {
-//        $this->add_taxonomy('banner_groups', 'banner', 'Banner Group', 'Banner Groups');
-//    }
-//    private function add_custom_post_type($post_type, $custom_fields) {
-//        register_post_type( 'movies',
-//            // CPT Options
-//            array(
-//                'labels' => $custom_fields,
-//                'public' => true,
-//                'has_archive' => true,
-//                'rewrite' => array('slug' => 'movies'),
-//                'show_in_rest' => true,
-//
-//            )
-//        );
-//    }
-//    // Our custom post type function
-//    function create_posttype() {
-//
-//        register_post_type( 'movies',
-//            // CPT Options
-//            array(
-//                'labels' => array(
-//                    'name' => __( 'Movies' ),
-//                    'singular_name' => __( 'Movie' )
-//                ),
-//                'public' => true,
-//                'has_archive' => true,
-//                'rewrite' => array('slug' => 'movies'),
-//                'show_in_rest' => true,
-//
-//            )
-//        );
-//    }
-//// Hooking up our function to theme setup
-//add_action( 'init', 'create_posttype' );
-
 }
 
 new WP_Action_Banner();
 
-function my_custom_init(){
-    register_post_type('book', array(
-        'labels'             => array(
-            'name'               => 'Книги', // Основное название типа записи
-            'singular_name'      => 'Книга', // отдельное название записи типа Book
-            'add_new'            => 'Добавить новую',
-            'add_new_item'       => 'Добавить новую книгу',
-            'edit_item'          => 'Редактировать книгу',
-            'new_item'           => 'Новая книга',
-            'view_item'          => 'Посмотреть книгу',
-            'search_items'       => 'Найти книгу',
-            'not_found'          =>  'Книг не найдено',
-            'not_found_in_trash' => 'В корзине книг не найдено',
-            'parent_item_colon'  => '',
-            'menu_name'          => 'Книги'
-
-        ),
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => true,
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => null,
-        'supports'           => array('custom-fields','title', 'editor', 'thumbnail')
-    ) );
-
-    register_taxonomy("Skills", array("book"), array("hierarchical" => true, "label" => "Skills", "singular_label" => "Skill", "rewrite" => true));
-}
-add_action('init', 'my_custom_init');
-
-add_action("admin_init", "admin_init");
-
-function admin_init(){
-    add_meta_box("year_completed-meta", "Year Completed", "year_completed", "book", "side", "low");
-    add_meta_box("credits_meta", "Design & Build Credits", "credits_meta", "book", "normal", "low");
-}
-
-function year_completed(){
-    global $post;
-    $custom = get_post_custom($post->ID);
-    $year_completed = $custom["year_completed"][0];
-    ?>
-    <label>Year:</label>
-    <input name="year_completed" value="<?php echo $year_completed; ?>" />
-    <?php
-}
-
-function credits_meta() {
-    global $post;
-    $custom = get_post_custom($post->ID);
-    $designers = $custom["designers"][0];
-    $developers = $custom["developers"][0];
-    $producers = $custom["producers"][0];
-    ?>
-    <p><label>Designed By:</label><br />
-        <textarea cols="50" rows="5" name="designers"><?php echo $designers; ?></textarea></p>
-    <p><label>Built By:</label><br />
-        <textarea cols="50" rows="5" name="developers"><?php echo $developers; ?></textarea></p>
-    <p><label>Produced By:</label><br />
-        <textarea cols="50" rows="5" name="producers"><?php echo $producers; ?></textarea></p>
-    <?php
-}
 
 add_action("manage_posts_custom_column",  "portfolio_custom_columns");
 add_filter("manage_edit-portfolio_columns", "portfolio_edit_columns");
@@ -268,6 +103,29 @@ if (!function_exists('admin_init_action_banners')) {
     }
 }
 
+add_action("manage_posts_custom_column",  "action_banner_custom_columns");
+add_filter("manage_edit-action_banner_columns", "action_banner_edit_columns");
+
+function action_banner_edit_columns($columns){
+    $columns = array(
+        "shortcode" => __("Shortcode", 'plugin-action-banner'),
+    );
+
+    return $columns;
+}
+function action_banner_custom_columns($column){
+    global $post;
+    $post_type = get_post_type( $post->ID );
+    if ($post_type != 'action_banner') {
+        return;
+    }
+    switch ($column) {
+        case "shortcode":
+            echo '[action_banner id="'. $post->ID . '"]';
+            break;
+    }
+}
+
 if (!function_exists('slides_meta')) {
     function slides_meta()
     {
@@ -280,7 +138,7 @@ if (!function_exists('slides_meta')) {
             $slides = json_decode($slides, true);
         }
         ?>
-        <p><?php echo __('You can use this shortcode to insert banner')?>[action_banner id="<?php echo get_the_ID();?>"]</p>
+        <p><?php echo __('You can use this shortcode to insert banner', 'plugin-action-banner')?>[action_banner id="<?php echo get_the_ID();?>"]</p>
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
             <select id="select-input">
