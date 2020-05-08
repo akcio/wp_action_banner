@@ -404,7 +404,7 @@ if (!function_exists('save_action_stickers_meta')) {
             update_post_meta(
                 $post_id,
                 'slides',
-                json_decode($json_encoded, true)
+                sanitize_text_or_array_field(json_decode($json_encoded, true))
             );
         }
     }
