@@ -469,7 +469,7 @@ if (!function_exists('action_banner_shortcode')) {
         } else {
             $slides = json_decode($slides, true);
         }
-        $out = '';
+        $out = 'NTNTNTNTNTNTNTNTNTTNTNNTN';
         foreach ($slides as $slide) {
             $img = $slide['image'];
             $header = $slide['title'];
