@@ -280,6 +280,7 @@ if (!function_exists('slides_meta')) {
             $slides = json_decode($slides, true);
         }
         ?>
+        <p><?php echo get_the_ID();?></p>
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
             <select id="select-input">
