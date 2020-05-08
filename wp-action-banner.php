@@ -252,7 +252,7 @@ if (!function_exists('init_action_banners')) {
             'has_archive' => false,
             'hierarchical' => false,
             'menu_position' => null,
-            'supports' => array('thumbnail')
+            'supports' => array('thumbnail', 'title')
         ));
     }
 }
@@ -279,26 +279,15 @@ if (!function_exists('slides_meta')) {
         }
         ?>
         <p><label>Slides:</label><br/>
-            <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
-            <select id="select-input">
-            <?php foreach ($slides as $num => $slide): ?>
-                <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
-            <?php endforeach; ?>
-            </select>
-            <button id="add-slide"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
-            <button id="remove-slide"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
-            <br>
-            <input type="text" id="slide-title">
-            <textarea id="slide-text">
 
-            </textarea>
-            <input type="text" id="slide-image">
-            <button id="save-slide"><?php echo __('Save slide', 'plugin-action-banner')?></button>
-            <br>
-            <div id="slide-buttons"></div><br>
-            <input type="text" id="slide-buttons-key"/>
-            <input type="text" id="slide-button-value"/>
-            <button id="add-slide-button"><?php echo __('Add button', 'plugin-action-banner');?></button>
+            <?php foreach ($slides as $num => $slide): ?>
+                <div id="slide-<?php echo $num;?>">
+                    <input type="text" name="title[<?php echo $num;?>]" value="<?php $slide['title'];?>"/>
+                    <button name="action[remove]" value="<?php echo $num; ?>"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
+                    <textarea name="text[<?php echo $num; ?>]"><?php echo $slide['text']; ?></textarea>
+                </div>
+            <?php endforeach; ?>
+            <button name="action[add_slide]" value="new"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
 
             <script>
                 var slides = <?php echo json_encode($slides);?>;
@@ -393,13 +382,8 @@ if (!function_exists('slides_meta')) {
 if (!function_exists('save_action_stickers_meta')) {
     function save_action_stickers_meta($post_id)
     {
-        if (!empty($_POST['slides'])) {
-            update_post_meta(
-                $post_id,
-                'slides',
-                json_encode(json_decode(stripslashes($_POST['slides']), true))
-            );
-        }
+        print_r($_POST);
+        exit(1);
     }
 }
 
