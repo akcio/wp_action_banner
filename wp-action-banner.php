@@ -377,7 +377,7 @@ if (!function_exists('slides_meta')) {
 
                 slides[currentSlide].title = sanitize(jQuery('#slide-title').val());
                 slides[currentSlide].text = sanitize(jQuery('#slide-text').val());
-                slides[currentSlide].image = sanitize(jQuery('#slide-image').val());
+                slides[currentSlide].image = (jQuery('#slide-image').val());
                 jQuery('#slides-input').val(JSON.stringify({items: slides}));
                 jQuery('#select-input option[value="'+ currentSlide  +'"]').html(slides[currentSlide].title);
                 return false;
