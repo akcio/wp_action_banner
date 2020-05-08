@@ -3,7 +3,7 @@
 Plugin Name: Action Banner
 Plugin Script: wp-action-banner.php
 Description: Allows you to create custom banners, which consist of an image, text, a link, and a call to action.  Custom banners are easily output via shortcodes.
-Version: 0.1.91
+Version: 0.1.92
 Author: Разработчики занаклейкой.рф
 Text Domain: plugin-action-banner
 */
@@ -26,38 +26,6 @@ class WP_Action_Banner{
 }
 
 new WP_Action_Banner();
-
-
-add_action("manage_posts_custom_column",  "portfolio_custom_columns");
-add_filter("manage_edit-portfolio_columns", "portfolio_edit_columns");
-
-function portfolio_edit_columns($columns){
-    $columns = array(
-        "cb" => "<input type=\"checkbox\" />",
-        "title" => "Portfolio Title",
-        "description" => "Description",
-        "year" => "Year Completed",
-        "skills" => "Skills",
-    );
-
-    return $columns;
-}
-function portfolio_custom_columns($column){
-    global $post;
-
-    switch ($column) {
-        case "description":
-            the_excerpt();
-            break;
-        case "year":
-            $custom = get_post_custom();
-            echo $custom["year_completed"][0];
-            break;
-        case "skills":
-            echo get_the_term_list($post->ID, 'Skills', '', ', ','');
-            break;
-    }
-}
 
 if (!function_exists('init_action_banners')) {
     function init_action_banners()
