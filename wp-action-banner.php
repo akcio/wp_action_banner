@@ -283,11 +283,11 @@ if (!function_exists('slides_meta')) {
             <?php foreach ($slides as $num => $slide): ?>
                 <div id="slide-<?php echo $num;?>">
                     <input type="text" name="title[<?php echo $num;?>]" value="<?php $slide['title'];?>"/>
-                    <button name="action[remove]" value="<?php echo $num; ?>"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
+                    <button type="submit" name="action[remove]" value="<?php echo $num; ?>"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
                     <textarea name="text[<?php echo $num; ?>]"><?php echo $slide['text']; ?></textarea>
                 </div>
             <?php endforeach; ?>
-            <button name="action[add_slide]" value="new"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
+            <button name="action[add_slide]" type="submit" value="new"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
 
             <script>
                 var slides = <?php echo json_encode($slides);?>;
