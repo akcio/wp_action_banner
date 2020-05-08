@@ -278,19 +278,29 @@ if (!function_exists('slides_meta')) {
             $slides = Array();
         }
         ?>
-        <form method="post">
         <p><label>Slides:</label><br/>
 
             <?php foreach ($slides as $num => $slide): ?>
                 <div id="slide-<?php echo $num;?>">
                     <input type="text" name="title[<?php echo $num;?>]" value="<?php $slide['title'];?>"/>
-                    <button type="submit" name="action[remove]" value="<?php echo $num; ?>"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
-                    <textarea name="text[<?php echo $num; ?>]"><?php echo $slide['text']; ?></textarea>
                 </div>
+                <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
             <?php endforeach; ?>
-            <button name="action[add_slide]" type="submit" value="new"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
-            <input name="action[add_slide]" type="submit" value="New"/>
-        </form>
+            <button id="add-slide"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
+            <button id="remove-slide"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
+            <br>
+            <input type="text" id="slide-title">
+            <textarea id="slide-text">
+
+            </textarea>
+            <input type="text" id="slide-image">
+            <button id="save-slide"><?php echo __('Save slide', 'plugin-action-banner')?></button>
+            <br>
+            <div id="slide-buttons"></div><br>
+            <input type="text" id="slide-buttons-key"/>
+            <input type="text" id="slide-button-value"/>
+            <button id="add-slide-button"><?php echo __('Add button', 'plugin-action-banner');?></button>
+
             <script>
                 var slides = <?php echo json_encode($slides);?>;
                 var lastSlideLength = slides.length;
@@ -325,7 +335,7 @@ if (!function_exists('slides_meta')) {
                         selectInput.change();
                     }
                     lastSlideLength = slides.length;
-                    jQuery('#slides-input').val(JSON.stringify(slides));
+                    jQuery('#slides-input').val(JSON.stringify({item: slides}));
                     return false;
                 }
 
@@ -352,7 +362,6 @@ if (!function_exists('slides_meta')) {
                     slides[currentSlide].title = sanitize(jQuery('#slide-title').val());
                     slides[currentSlide].text = sanitize(jQuery('#slide-text').val());
                     slides[currentSlide].image = sanitize(jQuery('#slide-image').val());
-                    jQuery('#slides-input').val(JSON.stringify(slides));
                     return false;
                 }
 
@@ -362,7 +371,6 @@ if (!function_exists('slides_meta')) {
                     slides[currentSlide].buttons[key] = value;
                     jQuery('#slide-buttons-key').val("");
                     jQuery('#slide-button-value').val("");
-                    jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
                     return false;
                 }
 
@@ -384,13 +392,14 @@ if (!function_exists('slides_meta')) {
 if (!function_exists('save_action_stickers_meta')) {
     function save_action_stickers_meta($post_id)
     {
-        $post_type = get_post_type( $post_id );
-        if ($post_type != 'action_banner') {
-            return;
-        }
-        print_r($post_type);
         print_r($_POST);
-        exit(1);
+        if (!empty($_POST['slides'])) {
+            update_post_meta(
+                $post_id,
+                'slides',
+                json_encode(json_decode(stripslashes($_POST['slides']), true))
+            );
+        }
     }
 }
 
