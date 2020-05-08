@@ -87,7 +87,7 @@ if (!function_exists('init_action_banners')) {
             'has_archive' => false,
             'hierarchical' => false,
             'menu_position' => null,
-            'supports' => array('thumbnail')
+            'supports' => array('thumbnail', 'title')
         ));
     }
 }
