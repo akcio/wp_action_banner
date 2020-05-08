@@ -199,13 +199,13 @@ add_filter("manage_edit-portfolio_columns", "portfolio_edit_columns");
 function portfolio_edit_columns($columns){
     $columns = array(
         "cb" => "<input type=\"checkbox\" />",
-    "title" => "Portfolio Title",
-    "description" => "Description",
-    "year" => "Year Completed",
-    "skills" => "Skills",
-  );
+        "title" => "Portfolio Title",
+        "description" => "Description",
+        "year" => "Year Completed",
+        "skills" => "Skills",
+    );
 
-  return $columns;
+    return $columns;
 }
 function portfolio_custom_columns($column){
     global $post;
@@ -252,7 +252,7 @@ if (!function_exists('init_action_banners')) {
             'has_archive' => false,
             'hierarchical' => false,
             'menu_position' => null,
-            'supports' => array('thumbnail', 'title')
+            'supports' => array('thumbnail')
         ));
     }
 }
@@ -279,13 +279,12 @@ if (!function_exists('slides_meta')) {
         }
         ?>
         <p><label>Slides:</label><br/>
-
-            <?php foreach ($slides as $num => $slide): ?>
-                <div id="slide-<?php echo $num;?>">
-                    <input type="text" name="title[<?php echo $num;?>]" value="<?php $slide['title'];?>"/>
-                </div>
-                <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
-            <?php endforeach; ?>
+            <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
+            <select id="select-input">
+                <?php foreach ($slides as $num => $slide): ?>
+                    <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
+                <?php endforeach; ?>
+            </select>
             <button id="add-slide"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
             <button id="remove-slide"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
             <br>
@@ -296,95 +295,97 @@ if (!function_exists('slides_meta')) {
             <input type="text" id="slide-image">
             <button id="save-slide"><?php echo __('Save slide', 'plugin-action-banner')?></button>
             <br>
-            <div id="slide-buttons"></div><br>
-            <input type="text" id="slide-buttons-key"/>
-            <input type="text" id="slide-button-value"/>
-            <button id="add-slide-button"><?php echo __('Add button', 'plugin-action-banner');?></button>
+        <div id="slide-buttons"></div><br>
+        <input type="text" id="slide-buttons-key"/>
+        <input type="text" id="slide-button-value"/>
+        <button id="add-slide-button"><?php echo __('Add button', 'plugin-action-banner');?></button>
 
-            <script>
-                var slides = <?php echo json_encode($slides);?>;
-                var lastSlideLength = slides.length;
-                var currentSlide = 0;
+        <script>
+            var slides = <?php echo json_encode($slides);?>;
+            var lastSlideLength = slides.length;
+            var currentSlide = 0;
 
-                function sanitize(string) {
-                    const map = {
-                        '&': '&amp;',
-                        '<': '&lt;',
-                        '>': '&gt;',
-                        '"': '&quot;',
-                        "'": '&#x27;',
-                        "/": '&#x2F;',
-                    };
-                    const reg = /[&<>"'/]/ig;
-                    return string.replace(reg, (match)=>(map[match]));
-                }
+            function sanitize(string) {
+                const map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#x27;',
+                    "/": '&#x2F;',
+                };
+                const reg = /[&<>"'/]/ig;
+                return string.replace(reg, (match)=>(map[match]));
+            }
 
-                function onClickAddSlide() {
-                    var optionName = "<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length;
-                    var o = new Option(optionName, slides.length);
-                    slides.push({
-                        title: sanitize(optionName),
-                        text: "",
-                        buttons: {},
-                        image: ""
-                    });
-                    jQuery(o).html(optionName);
-                    var selectInput = jQuery('#select-input');
-                    selectInput.append(o);
-                    if (lastSlideLength == 0) {
-                        selectInput.change();
-                    }
-                    lastSlideLength = slides.length;
-                    jQuery('#slides-input').val(JSON.stringify({item: slides}));
-                    return false;
-                }
-
-                function onRemoveSlide() {
-                    //TODO: IGOR
-                    return false;
-                }
-
-                function onChangeSlideSelect() {
-                    var itemNumber = jQuery(this).val();
-                    if (itemNumber >= slides.length) {
-                        return;
-                    }
-                    currentSlide = itemNumber;
-                    jQuery('#slide-title').val(slides[currentSlide].title);
-                    jQuery('#slide-text').val(slides[currentSlide].text)
-                    jQuery('#slide-image').val(slides[currentSlide].image);
-                    jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
-                    //TODO: buttons
-                }
-
-                function onClickSaveSlide() {
-
-                    slides[currentSlide].title = sanitize(jQuery('#slide-title').val());
-                    slides[currentSlide].text = sanitize(jQuery('#slide-text').val());
-                    slides[currentSlide].image = sanitize(jQuery('#slide-image').val());
-                    return false;
-                }
-
-                function onClickAddButton() {
-                    var key = jQuery('#slide-buttons-key').val();
-                    var value = jQuery('#slide-button-value').val();
-                    slides[currentSlide].buttons[key] = value;
-                    jQuery('#slide-buttons-key').val("");
-                    jQuery('#slide-button-value').val("");
-                    return false;
-                }
-
-                jQuery(function(){
-                    console.log(slides);
-                    console.log("OK");
-
-                    jQuery('#add-slide').click(onClickAddSlide);
-                    jQuery('#select-input').change(onChangeSlideSelect);
-                    jQuery('#remove-slide').click(onRemoveSlide);
-                    jQuery('#save-slide').click(onClickSaveSlide);
-                    jQuery('#add-slide-button').click(onClickAddButton);
+            function onClickAddSlide() {
+                var optionName = "<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length;
+                var o = new Option(optionName, slides.length);
+                slides.push({
+                    title: sanitize(optionName),
+                    text: "",
+                    buttons: {},
+                    image: ""
                 });
-            </script>
+                jQuery(o).html(optionName);
+                var selectInput = jQuery('#select-input');
+                selectInput.append(o);
+                if (lastSlideLength == 0) {
+                    selectInput.change();
+                }
+                lastSlideLength = slides.length;
+                jQuery('#slides-input').val(JSON.stringify({items: slides}));
+                return false;
+            }
+
+            function onRemoveSlide() {
+                //TODO: IGOR
+                return false;
+            }
+
+            function onChangeSlideSelect() {
+                var itemNumber = jQuery(this).val();
+                if (itemNumber >= slides.length) {
+                    return;
+                }
+                currentSlide = itemNumber;
+                jQuery('#slide-title').val(slides[currentSlide].title);
+                jQuery('#slide-text').val(slides[currentSlide].text)
+                jQuery('#slide-image').val(slides[currentSlide].image);
+                jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
+                //TODO: buttons
+            }
+
+            function onClickSaveSlide() {
+
+                slides[currentSlide].title = sanitize(jQuery('#slide-title').val());
+                slides[currentSlide].text = sanitize(jQuery('#slide-text').val());
+                slides[currentSlide].image = sanitize(jQuery('#slide-image').val());
+                jQuery('#slides-input').val(JSON.stringify({items: slides}));
+                return false;
+            }
+
+            function onClickAddButton() {
+                var key = jQuery('#slide-buttons-key').val();
+                var value = jQuery('#slide-button-value').val();
+                slides[currentSlide].buttons[key] = value;
+                jQuery('#slide-buttons-key').val("");
+                jQuery('#slide-button-value').val("");
+                jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
+                return false;
+            }
+
+            jQuery(function(){
+                console.log(slides);
+                console.log("OK");
+
+                jQuery('#add-slide').click(onClickAddSlide);
+                jQuery('#select-input').change(onChangeSlideSelect);
+                jQuery('#remove-slide').click(onRemoveSlide);
+                jQuery('#save-slide').click(onClickSaveSlide);
+                jQuery('#add-slide-button').click(onClickAddButton);
+            });
+        </script>
         <?php
     }
 }
@@ -392,7 +393,6 @@ if (!function_exists('slides_meta')) {
 if (!function_exists('save_action_stickers_meta')) {
     function save_action_stickers_meta($post_id)
     {
-        print_r($_POST);
         if (!empty($_POST['slides'])) {
             update_post_meta(
                 $post_id,
