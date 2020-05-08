@@ -443,13 +443,13 @@ if (!function_exists('save_action_stickers_meta')) {
         }
 
         if (!empty($_POST['slides'])) {
-            $json_encoded = utf8_encode(str_replace('\\"', '"', $_POST['slides']));
+            $json_encoded = str_replace('\\"', '"', $_POST['slides']);
 
 
             update_post_meta(
                 $post_id,
                 'slides',
-                wp_json_encode(json_decode($json_encoded, true))
+                wp_json_encode(json_decode($json_encoded, true), JSON_UNESCAPED_UNICODE)
             );
         }
     }
