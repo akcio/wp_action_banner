@@ -289,6 +289,7 @@ if (!function_exists('slides_meta')) {
                 </div>
             <?php endforeach; ?>
             <button name="action[add_slide]" type="submit" value="new"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
+            <input name="action[add_slide]" type="submit" value="New"/>
         </form>
             <script>
                 var slides = <?php echo json_encode($slides);?>;
