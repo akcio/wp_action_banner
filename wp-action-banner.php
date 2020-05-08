@@ -471,7 +471,6 @@ if (!function_exists('action_banner_shortcode')) {
             return '';
 
         $custom = get_post_custom($post->ID);
-        print_r($custom);
         $slides = $custom["slides"][0];
         if (empty($slides)) {
             $slides = Array('items' => Array());
@@ -479,7 +478,7 @@ if (!function_exists('action_banner_shortcode')) {
             $slides = json_decode($slides, true);
         }
         $out = 'NTNTNTNTNTNTNTNTNTTNTNNTN';
-        foreach ($slides as $slide) {
+        foreach ($slides['items'] as $slide) {
             $img = $slide['image'];
             $header = $slide['title'];
             $text = $slide['text'];
