@@ -399,7 +399,7 @@ if (!function_exists('save_action_stickers_meta')) {
         }
         print_r($_POST);
         $bodytag = str_replace('\\"', '"', $_POST['slides']);
-        print_r(json_decode("" . $_POST['slides'] . ""));
+        print_r(json_decode($bodytag));
         echo '1---';
         exit(1);
         if (!empty($_POST['slides'])) {
