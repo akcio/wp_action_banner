@@ -397,6 +397,8 @@ if (!function_exists('save_action_stickers_meta')) {
         if ($post_type != 'action_banner') {
             return;
         }
+        print_r($_POST);
+        exit(1);
         if (!empty($_POST['slides'])) {
             update_post_meta(
                 $post_id,
