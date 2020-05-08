@@ -466,6 +466,9 @@ if (!function_exists('action_banner_shortcode')) {
             'id' => null
         ], $atts );
 
+        print_r($rg);
+        exit(1);
+
         if( ! $post = get_post( $rg->id ) )
             return '';
 
@@ -502,4 +505,5 @@ if (!function_exists('action_banner_shortcode')) {
         return $out;
     }
 }
+
 add_shortcode('action_banner', 'action_banner_shortcode');
