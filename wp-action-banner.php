@@ -217,6 +217,7 @@ if (!function_exists('slides_meta')) {
                     jQuery('#slide-buttons-key').hide();
                     jQuery('#slide-button-value').hide();
                     jQuery('#save-slide').hide();
+                    jQuery('#remove-slide').hide();
                     return;
                 }
                 currentSlide = itemNumber;
@@ -228,6 +229,7 @@ if (!function_exists('slides_meta')) {
                 jQuery('#slide-buttons-key').show();
                 jQuery('#slide-button-value').show();
                 jQuery('#save-slide').show();
+                jQuery('#remove-slide').show();
                 //TODO: buttons
             }
 
