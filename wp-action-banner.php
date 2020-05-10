@@ -187,7 +187,7 @@ if (!function_exists('slides_meta')) {
                     jQuery('#save-slide').hide();
                     return;
                 }
-                var selectInput = $('#select-input');
+                var selectInput = jQuery('#select-input');
                 selectInput.find('option:selected').remove();
                 selectInput.find('option[value="-1"]').prop('selected', true);
                 var newSlides = [];
