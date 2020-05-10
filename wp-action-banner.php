@@ -113,7 +113,7 @@ if (!function_exists('slides_meta')) {
         ?>
         <p><?php echo __('You can use this shortcode to insert banner', 'plugin-action-banner')?> [action_banner id="<?php echo get_the_ID();?>"]</p>
         <p><label>Slides:</label><br/>
-            <input id="slides-input" type="hidden" name="slides" value="<?php echo json_encode($slides) ?>"/>
+            <input id="slides-input" type="hidden" name="slides" value=""/>
             <select id="select-input">
                 <option value="-1"><?php echo __('Please select slide', 'plugin-action-banner');?></option>
                 <?php foreach ($slides['items'] as $num => $slide): ?>
@@ -135,6 +135,7 @@ if (!function_exists('slides_meta')) {
 
         <script>
             var slides = <?php echo json_encode($slides['items']);?>;
+            document.getElementById("slides-input").value = JSON.stringify({items: slides});
             var lastSlideLength = slides.length;
             var currentSlide = -1;
 
