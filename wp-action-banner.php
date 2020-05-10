@@ -176,12 +176,38 @@ if (!function_exists('slides_meta')) {
             }
 
             function onRemoveSlide() {
-                //TODO: IGOR
+                if (currentSlide >= slides.length || currentSlide < 0) {
+                    jQuery('#slide-title').hide();
+                    jQuery('#slide-text').hide();
+                    jQuery('#slide-image').hide();
+                    jQuery('#slide-buttons').hide();
+                    jQuery('#add-slide-button').hide();
+                    jQuery('#slide-buttons-key').hide();
+                    jQuery('#slide-button-value').hide();
+                    jQuery('#save-slide').hide();
+                    return;
+                }
+                var selectInput = $('#select-input');
+                selectInput.find('option:selected').remove();
+                selectInput.find('option[value="-1"]').prop('selected', true);
+                var newSlides = [];
+                for (var i=0; i < slides.length; ++i) {
+                    if (i !== currentSlide) {
+                        newSlides.push(slides[i]);
+                    }
+                }
+                slides = newSlides;
+                currentSlide = -1;
+                lastSlideLength = -1;
+                jQuery('#slides-input').val(JSON.stringify({items: slides}));
+
+                onChangeSlideSelect();
+
                 return false;
             }
 
             function onChangeSlideSelect() {
-                var itemNumber = jQuery(this).val();
+                var itemNumber = jQuery('#select-input').val();
                 if (itemNumber >= slides.length || itemNumber < 0) {
                     jQuery('#slide-title').hide();
                     jQuery('#slide-text').hide();
