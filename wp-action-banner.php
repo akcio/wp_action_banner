@@ -171,6 +171,8 @@ if (!function_exists('slides_meta')) {
                 return string.replace(reg, (match)=>(map[match]));
             }
 
+            checkAndInit();
+
             function checkAndInit() {
                 for (var i = 0; i < slides.length; ++i) {
                     if (slides[i].v_align === undefined) {
@@ -298,7 +300,6 @@ if (!function_exists('slides_meta')) {
             }
 
             jQuery(function(){
-                checkAndInit();
                 console.log(slides);
                 console.log("OK");
                 jQuery('#add-slide').click(onClickAddSlide);
