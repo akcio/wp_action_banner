@@ -124,33 +124,44 @@ if (!function_exists('slides_meta')) {
                     <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
                 <?php endforeach; ?>
             </select>
-            <button id="add-slide"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
-            <button id="remove-slide" style="display: none;"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
+            <button id="add-slide" class="button"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
+            <button id="remove-slide" class="button" style="display: none;"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
             <br>
             <div id="slide-params-form" style="display: none;">
-                <input type="text" id="slide-title"/>
-                <textarea id="slide-text"></textarea>
-                <input type="text" id="slide-image"/><br>
-                <input type="radio" id="leftAlign" checked name="horizontal_align" value="left"/>
-                <label for="leftAlign"><?php echo __('Align left', 'plugin-action-banner')?></label>
-                <input type="radio" id="centerAlign" name="horizontal_align" value="center"/>
-                <label for="centerAlign"><?php echo __('Align center', 'plugin-action-banner')?></label>
-                <input type="radio" id="rightAlign" name="horizontal_align" value="right"/>
-                <label for="rightAlign"><?php echo __('Align right', 'plugin-action-banner')?></label><br>
+            	<label><?php echo __('Slide title', 'plugin-action-banner');?></label><br/>
+                <input type="text" id="slide-title"/><br/>
 
+            	<label><?php echo __('Slide text', 'plugin-action-banner');?></label><br/>
+                <textarea id="slide-text"></textarea><br/>
+
+            	<label><?php echo __('Slide image', 'plugin-action-banner');?></label><br/>
+                <input type="text" id="slide-image"/><br>
+
+            	<label><?php echo __('Horizontal alignment', 'plugin-action-banner');?></label><br/>
+                <input type="radio" id="leftAlign" checked name="horizontal_align" value="left"/>
+                <label for="leftAlign"><?php echo __('Left', 'plugin-action-banner')?></label>
+                <input type="radio" id="centerAlign" name="horizontal_align" value="center"/>
+                <label for="centerAlign"><?php echo __('Center', 'plugin-action-banner')?></label>
+                <input type="radio" id="rightAlign" name="horizontal_align" value="right"/>
+                <label for="rightAlign"><?php echo __('Right', 'plugin-action-banner')?></label><br>
+            	
+            	<label><?php echo __('Vertiacal alignment', 'plugin-action-banner');?></label><br/>
                 <input type="radio" id="topAlign" checked name="vertical_align" value="top"/>
-                <label for="topAlign"><?php echo __('Align top', 'plugin-action-banner')?></label>
+                <label for="topAlign"><?php echo __('Top', 'plugin-action-banner')?></label>
                 <input type="radio" id="vcenterAlign" name="vertical_align" value="center"/>
-                <label for="vcenterAlign"><?php echo __('Align center', 'plugin-action-banner')?></label>
+                <label for="vcenterAlign"><?php echo __('Middle', 'plugin-action-banner')?></label>
                 <input type="radio" id="bottomAlign" name="vertical_align" value="bottom"/>
-                <label for="bottomAlign"><?php echo __('Align bottom', 'plugin-action-banner')?></label><br>
-                <button id="save-slide"><?php echo __('Save slide', 'plugin-action-banner')?></button>
+                <label for="bottomAlign"><?php echo __('Bottom', 'plugin-action-banner')?></label><br>
+
+                <button id="save-slide" class="button"><?php echo __('Save slide', 'plugin-action-banner')?></button>
             </div>
             <br>
         <div id="slide-buttons"></div><br>
+    	<label><?php echo __('Button name', 'plugin-action-banner');?></label><br/>
         <input type="text" id="slide-buttons-key" style="display: none;"/>
+    	<label><?php echo __('Button link', 'plugin-action-banner');?></label><br/>
         <input type="text" id="slide-button-value" style="display: none;"/>
-        <button id="add-slide-button" style="display: none;"><?php echo __('Add button', 'plugin-action-banner');?></button>
+        <button id="add-slide-button" class="button" style="display: none;"><?php echo __('Add button', 'plugin-action-banner');?></button>
 
         <script>
             var slides = <?php echo json_encode($slides['items']);?>;
