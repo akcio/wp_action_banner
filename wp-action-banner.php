@@ -240,8 +240,8 @@ if (!function_exists('slides_meta')) {
                 jQuery('#slide-text').val(slides[currentSlide].text).show();
                 jQuery('#slide-image').val(slides[currentSlide].image).show();
                 jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons)).show();
-                jQuery('input[name="horizontal_align"]').prop('checked', false).parent().find('input[name="horizontal_align" value="' + slides[currentSlide].h_align + '"]').prop('checked', true);
-                jQuery('input[name="vertical_align"]').prop('checked', false).parent().find('input[name="vertical_align" value="' + slides[currentSlide].v_align + '"]').prop('checked', true);
+                jQuery('input[name="horizontal_align"]').prop('checked', false).parent().find('input[name="horizontal_align"][value="' + slides[currentSlide].h_align + '"]').prop('checked', true);
+                jQuery('input[name="vertical_align"]').prop('checked', false).parent().find('input[name="vertical_align"][value="' + slides[currentSlide].v_align + '"]').prop('checked', true);
 
                 jQuery('#add-slide-button').show();
                 jQuery('#slide-buttons-key').show();
