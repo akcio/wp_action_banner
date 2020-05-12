@@ -171,6 +171,30 @@ if (!function_exists('slides_meta')) {
                 return string.replace(reg, (match)=>(map[match]));
             }
 
+            function checkAndInit() {
+                for (var i = 0; i < slides.length; ++i) {
+                    if (slides[i].v_align === undefined) {
+                        slides[i].v_align = 'center';
+                    }
+                    if (slides[i].h_align === undefined) {
+                        slides[i].h_align = 'left';
+                    }
+                    if (slides[i].image === undefined) {
+                        slides[i].image = '';
+                    }
+                    if (slides[i].buttons === undefined) {
+                        slides[i].buttons = {};
+                    }
+                    if (slides[i].title === undefined) {
+                        slides[i].title = '';
+                    }
+                    if (slides[i].text === undefined) {
+                        slides[i].text = '';
+                    }
+
+                }
+            }
+
             function onClickAddSlide() {
                 var optionName = "<?php echo __('Slide', 'plugin-action-banner')?> " + slides.length;
                 var o = new Option(optionName, slides.length);
