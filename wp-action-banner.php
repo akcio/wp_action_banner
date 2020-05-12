@@ -298,9 +298,9 @@ if (!function_exists('slides_meta')) {
             }
 
             jQuery(function(){
+                checkAndInit();
                 console.log(slides);
                 console.log("OK");
-
                 jQuery('#add-slide').click(onClickAddSlide);
                 jQuery('#select-input').change(onChangeSlideSelect);
                 jQuery('#remove-slide').click(onRemoveSlide);
