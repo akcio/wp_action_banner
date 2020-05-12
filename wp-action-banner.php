@@ -247,6 +247,7 @@ if (!function_exists('slides_meta')) {
                 jQuery('#slide-buttons-key').show();
                 jQuery('#slide-button-value').show();
                 jQuery('#slide-params-form').show();
+                jQuery('#remove-slide').show();
                 //TODO: buttons
             }
 
