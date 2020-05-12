@@ -112,6 +112,10 @@ if (!function_exists('slides_meta')) {
         }
         ?>
         <p><?php echo __('You can use this shortcode to insert banner', 'plugin-action-banner')?> [action_banner id="<?php echo get_the_ID();?>"]</p>
+        <p>
+            <label><?php echo __('Height', 'plugin-action-banner');?></label><br/>
+            <input type="number" name="banner_height" value="0"/>
+        </p>
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value=""/>
             <select id="select-input">
@@ -123,10 +127,25 @@ if (!function_exists('slides_meta')) {
             <button id="add-slide"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
             <button id="remove-slide" style="display: none;"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
             <br>
-            <input type="text" id="slide-title" style="display: none;">
-            <textarea id="slide-text" style="display: none;"></textarea>
-            <input type="text" id="slide-image" style="display: none;">
-            <button id="save-slide" style="display: none;"><?php echo __('Save slide', 'plugin-action-banner')?></button>
+            <div id="slide-params-form" style="display: none;">
+                <input type="text" id="slide-title"/>
+                <textarea id="slide-text"></textarea>
+                <input type="text" id="slide-image"/><br>
+                <input type="radio" id="leftAlign" checked name="horizontal_align" value="left"/>
+                <label for="leftAlign"><?php echo __('Align left', 'plugin-action-banner')?></label>
+                <input type="radio" id="centerAlign" name="horizontal_align" value="center"/>
+                <label for="centerAlign"><?php echo __('Align center', 'plugin-action-banner')?></label>
+                <input type="radio" id="rightAlign" name="horizontal_align" value="right"/>
+                <label for="rightAlign"><?php echo __('Align right', 'plugin-action-banner')?></label><br>
+
+                <input type="radio" id="topAlign" checked name="vertical_align" value="top"/>
+                <label for="topAlign"><?php echo __('Align top', 'plugin-action-banner')?></label>
+                <input type="radio" id="vcenterAlign" name="vertical_align" value="center"/>
+                <label for="vcenterAlign"><?php echo __('Align center', 'plugin-action-banner')?></label>
+                <input type="radio" id="bottomAlign" name="vertical_align" value="bottom"/>
+                <label for="bottomAlign"><?php echo __('Align bottom', 'plugin-action-banner')?></label><br>
+                <button id="save-slide"><?php echo __('Save slide', 'plugin-action-banner')?></button>
+            </div>
             <br>
         <div id="slide-buttons"></div><br>
         <input type="text" id="slide-buttons-key" style="display: none;"/>
@@ -162,7 +181,9 @@ if (!function_exists('slides_meta')) {
                     title: sanitize(optionName),
                     text: "",
                     buttons: {},
-                    image: ""
+                    image: "",
+                    h_align: "left",
+                    v_align: "center"
                 });
                 jQuery(o).html(optionName);
                 var selectInput = jQuery('#select-input');
@@ -177,14 +198,11 @@ if (!function_exists('slides_meta')) {
 
             function onRemoveSlide() {
                 if (currentSlide >= slides.length || currentSlide < 0) {
-                    jQuery('#slide-title').hide();
-                    jQuery('#slide-text').hide();
-                    jQuery('#slide-image').hide();
+                    jQuery('#slide-params-form').hide();
                     jQuery('#slide-buttons').hide();
                     jQuery('#add-slide-button').hide();
                     jQuery('#slide-buttons-key').hide();
                     jQuery('#slide-button-value').hide();
-                    jQuery('#save-slide').hide();
                     return;
                 }
                 var selectInput = jQuery('#select-input');
@@ -209,14 +227,11 @@ if (!function_exists('slides_meta')) {
             function onChangeSlideSelect() {
                 var itemNumber = jQuery('#select-input').val();
                 if (itemNumber >= slides.length || itemNumber < 0) {
-                    jQuery('#slide-title').hide();
-                    jQuery('#slide-text').hide();
-                    jQuery('#slide-image').hide();
+                    jQuery('#slide-params-form').hide();
                     jQuery('#slide-buttons').hide();
                     jQuery('#add-slide-button').hide();
                     jQuery('#slide-buttons-key').hide();
                     jQuery('#slide-button-value').hide();
-                    jQuery('#save-slide').hide();
                     jQuery('#remove-slide').hide();
                     return;
                 }
@@ -225,11 +240,13 @@ if (!function_exists('slides_meta')) {
                 jQuery('#slide-text').val(slides[currentSlide].text).show();
                 jQuery('#slide-image').val(slides[currentSlide].image).show();
                 jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons)).show();
+                jQuery('input[name="horizontal_align"]').prop('checked', false).parent().find('input[name="horizontal_align" value="' + slides[currentSlide].h_align + '"]').prop('checked', true);
+                jQuery('input[name="vertical_align"]').prop('checked', false).parent().find('input[name="vertical_align" value="' + slides[currentSlide].v_align + '"]').prop('checked', true);
+
                 jQuery('#add-slide-button').show();
                 jQuery('#slide-buttons-key').show();
                 jQuery('#slide-button-value').show();
-                jQuery('#save-slide').show();
-                jQuery('#remove-slide').show();
+                jQuery('#slide-params-form').show();
                 //TODO: buttons
             }
 
@@ -238,6 +255,8 @@ if (!function_exists('slides_meta')) {
                 slides[currentSlide].title = sanitize(jQuery('#slide-title').val());
                 slides[currentSlide].text = sanitize(jQuery('#slide-text').val());
                 slides[currentSlide].image = (jQuery('#slide-image').val());
+                slides[currentSlide].h_align = jQuery('input[name="horizontal_align"]:checked').val();
+                slides[currentSlide].v_align = jQuery('input[name="vertical_align"]:checked').val();
                 jQuery('#slides-input').val(JSON.stringify({items: slides}));
                 jQuery('#select-input option[value="'+ currentSlide  +'"]').html(slides[currentSlide].title);
                 return false;
@@ -300,6 +319,14 @@ if (!function_exists('save_action_stickers_meta')) {
         $post_type = get_post_type( $post_id );
         if ($post_type != 'action_banner') {
             return;
+        }
+
+        if (!empty($_POST['banner_height'])) {
+            update_post_meta(
+                $post_id,
+                'banner_height',
+                (int)$_POST['banner_height']
+            );
         }
 
         if (!empty($_POST['slides'])) {
