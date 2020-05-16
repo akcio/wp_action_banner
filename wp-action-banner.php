@@ -158,9 +158,9 @@ if (!function_exists('slides_meta')) {
             <br>
         <div id="slide-buttons"></div><br>
     	<label><?php echo __('Button name', 'plugin-action-banner');?></label><br/>
-        <input type="text" id="slide-buttons-key" style="display: none;"/>
+        <input type="text" id="slide-buttons-key" style="display: none;"/><br/>
     	<label><?php echo __('Button link', 'plugin-action-banner');?></label><br/>
-        <input type="text" id="slide-button-value" style="display: none;"/>
+        <input type="text" id="slide-button-value" style="display: none;"/><br/>
         <button id="add-slide-button" class="button" style="display: none;"><?php echo __('Add button', 'plugin-action-banner');?></button>
 
         <script>
