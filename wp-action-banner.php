@@ -16,12 +16,24 @@ class WP_Action_Banner{
     public function __construct()
     {
         add_action('plugins_loaded', array($this, 'init_texdomain'));
+        add_action('wp_enqueue_scripts', array($this, 'register_styles'), 8);
+        add_action('wp_enqueue_scripts', array($this, 'register_scripts'), 8);
     }
 
     public function init_texdomain() {
         $mo_file_path = dirname(__FILE__) . '/languages/action-banner-'. determine_locale() . '.mo';
         load_textdomain( 'action-banner', $mo_file_path );
         load_plugin_textdomain('action-banner', false, dirname(plugin_basename(__FILE__)).'/languages/' );
+    }
+
+    public function register_styles() {
+        wp_register_style('banner-styles', plugin_dir_url( __FILE__ ).'assets/css/ab-styles.css');
+        wp_enqueue_style('banner-styles');
+    }
+
+    public function register_scripts() {
+        wp_register_script( 'banner-scripts', plugin_dir_url( __FILE__ ).'assets/js/ab-scripts.css' );  
+        wp_enqueue_script( 'banner-scripts' );  
     }
 }
 
@@ -408,19 +420,26 @@ if (!function_exists('action_banner_shortcode')) {
             $text = $slide['text'];
             $buttons = $slide['buttons'];
             $out .= '
-        <div class="action-banner" style="background-image: url(' . $img . ');">
-        	<div class="ab-wrapper">
-                <div class="ab-header">' . $header . '</div>
-                <div class="ab-text">' . $text . '</div>
-                <div class="ab-buttons">';
-            foreach ($buttons as $name => $link) {
-                $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>';
-            }
-            $out .= '
+            <div class="action-banner">
+                <div class="slide" style="background-image: url(' . $img . ');">
+                	<div class="ab-wrapper">
+                        <div class="ab-header">' . $header . '</div>
+                        <div class="ab-text">' . $text . '</div>
+                        <div class="ab-buttons">';
+                    foreach ($buttons as $name => $link) {
+                        $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>';
+                    }
+                    $out .= '
+                        </div>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url(' . $img . ');">
+                    <div class="ab-wrapper">
+                        TEST
+                    </div>
                 </div>
             </div>
-        </div>
-        ';
+            ';
         }
         return $out;
     }
