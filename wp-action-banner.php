@@ -16,8 +16,8 @@ class WP_Action_Banner{
     public function __construct()
     {
         add_action('plugins_loaded', array($this, 'init_texdomain'));
-        add_action('wp_enqueue_scripts', array($this, 'register_styles'), 8);
-        add_action('wp_enqueue_scripts', array($this, 'register_scripts'), 8);
+        add_action('wp_enqueue_scripts', array($this, 'register_styles'), 10);
+        add_action('wp_enqueue_scripts', array($this, 'register_scripts'), 10);
     }
 
     public function init_texdomain() {

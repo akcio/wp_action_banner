@@ -3,10 +3,10 @@ jQuery(document).ready(function( $ ) {
 
 	setInterval(function() { 
 	  $('.action-banner > div:first')
-	    .fadeOut(1000)
+	    .fadeOut(500)
 	    .next()
-	    .fadeIn(1000)
+	    .fadeIn(500)
 	    .end()
 	    .appendTo('.action-banner');
-	},  3000);
+	},  5000);
 });
