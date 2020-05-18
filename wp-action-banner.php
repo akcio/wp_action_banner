@@ -32,7 +32,7 @@ class WP_Action_Banner{
     }
 
     public function register_scripts() {
-        wp_register_script( 'banner-scripts', plugin_dir_url( __FILE__ ).'assets/js/ab-scripts.css' );  
+        wp_register_script( 'banner-scripts', plugin_dir_url( __FILE__ ).'assets/js/ab-scripts.js' );  
         wp_enqueue_script( 'banner-scripts' );  
     }
 }
