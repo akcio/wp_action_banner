@@ -413,34 +413,36 @@ if (!function_exists('action_banner_shortcode')) {
         } else {
             $slides = json_decode($slides, true);
         }
-        $out = '';
+        $out = '<div class="action-banner">';
         foreach ($slides['items'] as $slide) {
             $img = $slide['image'];
             $header = $slide['title'];
             $text = $slide['text'];
             $buttons = $slide['buttons'];
             $out .= '
-            <div class="action-banner">
                 <div class="slide" style="background-image: url(' . $img . ');">
                 	<div class="ab-wrapper">
                         <div class="ab-header">' . $header . '</div>
                         <div class="ab-text">' . $text . '</div>
                         <div class="ab-buttons">';
-                    foreach ($buttons as $name => $link) {
-                        $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>';
-                    }
-                    $out .= '
+                        foreach ($buttons as $name => $link) {
+                            $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>';
+                        }
+                        $out .= '
                         </div>
                     </div>
-                </div>
-                <div class="slide" style="background-image: url(' . $img . ');">
-                    <div class="ab-wrapper">
-                        TEST
-                    </div>
-                </div>
-            </div>
-            ';
+                </div>';
         }
+
+        /* Only for test */
+        $out .= '
+            <div class="slide">
+                <div class="ab-wrapper">
+                    TEST
+                </div>
+            </div>';
+
+        $out .= '</div>';
         return $out;
     }
 }
