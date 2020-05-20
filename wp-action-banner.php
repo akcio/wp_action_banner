@@ -438,10 +438,9 @@ if (!function_exists('save_action_stickers_meta')) {
             update_post_meta(
                 $post_id,
                 'btn_hover_color',
-                (int)$_POST['btn_hover_color']
+                $_POST['btn_hover_color']
             );
         }
-
 
         if (!empty($_POST['slides'])) {
             $json_encoded = str_replace('\\"', '"', $_POST['slides']);
