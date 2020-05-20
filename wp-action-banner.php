@@ -170,9 +170,9 @@ if (!function_exists('slides_meta')) {
         </p>
         <p>
             <label for="btnColor"><?php echo __('Button color', 'plugin-action-banner');?></label><br/>
-            <input type="color" id="btnColor" name="btn_color" value="<?php echo $btn_color; ?>" />
+            <input type="color" id="btnColor" name="btn_color" value="<?php echo $btn_color; ?>" /><br/>
             <label for="btnHoverColor"><?php echo __('Button hover color', 'plugin-action-banner');?></label><br/>
-            <input type="color" id="btnHoverColor" name="btn_hover_color" value="<?php echo $btn_hover_color; ?>" />
+            <input type="color" id="btnHoverColor" name="btn_hover_color" value="<?php echo $btn_hover_color; ?>" /><br/>
         </p>
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value=""/>
@@ -193,7 +193,8 @@ if (!function_exists('slides_meta')) {
                 <textarea id="slide-text"></textarea><br/>
 
             	<label><?php echo __('Slide image', 'plugin-action-banner');?></label><br/>
-                <input type="text" id="slide-image"/><br>
+                <input type="text" id="slide-image"/>
+                <button id="add-slide-image" class="button"><?php echo __('From media library', 'plugin-action-banner'); ?></button><br>
 
             	<label><?php echo __('Horizontal alignment', 'plugin-action-banner');?></label><br/>
                 <input type="radio" id="leftAlign" checked name="horizontal_align" value="left"/>

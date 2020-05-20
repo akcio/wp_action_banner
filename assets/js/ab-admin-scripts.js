@@ -8,6 +8,7 @@ jQuery(document).ready(function( $ ) {
     $('#remove-slide').click(onRemoveSlide);
     $('#save-slide').click(onClickSaveSlide);
     $('#add-slide-button').click(onClickAddButton);
+    $('#add-slide-image').click(onClickAddImageButton);
 
     function sanitize(string) {
         const map = {
@@ -148,5 +149,19 @@ jQuery(document).ready(function( $ ) {
         $('#slide-button-value').val("");
         $('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
         return false;
+    }
+
+    function onClickAddImageButton(e) {
+        e.preventDefault();
+        var image = wp.media({ 
+            title: 'Upload Image',
+            multiple: false
+        }).open()
+        .on('select', function(e){
+            var uploaded_image = image.state().get('selection').first();
+            var image_url = uploaded_image.toJSON().url;
+            console.log(uploaded_image);
+            $('#slide-image').val(image_url);
+        });
     }
 });
