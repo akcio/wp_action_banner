@@ -136,6 +136,12 @@ if (!function_exists('slides_meta')) {
         if (empty($timeout)) {
             $timeout = 5000;
         }
+        if (empty($btn_color)) {
+            $btn_color = '#149DDE';
+        }
+        if (empty($btn_hover_color)) {
+            $btn_hover_color = '#00ACEE';
+        }
         ?>
         <p><?php echo __('You can use this shortcode to insert banner', 'plugin-action-banner')?> [action_banner id="<?php echo get_the_ID();?>"]</p>
         <p>
@@ -152,9 +158,9 @@ if (!function_exists('slides_meta')) {
         </p>
         <p>
             <label for="btnColor"><?php echo __('Button color', 'plugin-action-banner');?></label><br/>
-            <input type="color" id="btnColor" name="btn_color" />
+            <input type="color" id="btnColor" name="btn_color" value="<?php echo $btn_color; ?>" />
             <label for="btnHoverColor"><?php echo __('Button hover color', 'plugin-action-banner');?></label><br/>
-            <input type="color" id="btnHoverColor" name="btn_hover_color" />
+            <input type="color" id="btnHoverColor" name="btn_hover_color" value="<?php echo $btn_hover_color; ?>" />
         </p>
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value=""/>
@@ -258,8 +264,6 @@ if (!function_exists('slides_meta')) {
                     buttons: {},
                     image: "",
                     h_align: "left",
-                    btn_color: "#149DDE",
-                    btn_hover_color: "#00ACEE",
                     text_color: "dark"
                 });
                 jQuery(o).html(optionName);
