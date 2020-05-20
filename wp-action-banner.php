@@ -117,24 +117,36 @@ if (!function_exists('slides_meta')) {
         global $post;
         $custom = get_post_custom($post->ID);
         $slides = $custom["slides"][0];
+        $main_height = $custom['main_height'];
+        $relative_height = $custom['relative_height'];
+        $timeout = $custom['slide_timeout'];
         if (empty($slides)) {
             $slides = Array('items' => Array());
         } else {
             $slides = json_decode($slides, true);
         }
+        if (empty($main_height)) {
+            $main_height = 400;
+        }
+        if (empty($relative_height)) {
+            $relative_height = 300;
+        }
+        if (empty($timeout)) {
+            $timeout = 5000;
+        }
         ?>
         <p><?php echo __('You can use this shortcode to insert banner', 'plugin-action-banner')?> [action_banner id="<?php echo get_the_ID();?>"]</p>
         <p>
             <label><?php echo __('Main height', 'plugin-action-banner');?></label><br/>
-            <input type="number" name="main_height" value="0"/>
+            <input type="number" name="main_height" value="<?php echo $main_height;?>"/>
         </p>
         <p>
             <label><?php echo __('Relative height', 'plugin-action-banner');?></label><br/>
-            <input type="number" name="relative_height" value="0"/>
+            <input type="number" name="relative_height" value="<?php echo $relative_height;?>"/>
         </p>
         <p>
             <label><?php echo __('Slide timeout', 'plugin-action-banner');?></label><br/>
-            <input type="number" name="slide_timeout" value="0"/>
+            <input type="number" name="slide_timeout" value="<?php echo $timeout;?>"/>
         </p>
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value=""/>
@@ -225,10 +237,10 @@ if (!function_exists('slides_meta')) {
                         slides[i].text = '';
                     }
                     if (slides[i].btn_color === undefined) {
-                        slides[i].btn_color = "#FFFFFF";
+                        slides[i].btn_color = "#149DDE";
                     }
                     if (slides[i].btn_hover_color === undefined) {
-                        slides[i].btn_hover_color = "#FFFFFF";
+                        slides[i].btn_hover_color = "#00ACEE";
                     }
                     if (slides[i].text_color === undefined) {
                         slides[i].text_color = "dark";
@@ -249,8 +261,8 @@ if (!function_exists('slides_meta')) {
                     buttons: {},
                     image: "",
                     h_align: "left",
-                    btn_color: "#FFFFFF",
-                    btn_hover_color: "#FFFFFF",
+                    btn_color: "#149DDE",
+                    btn_hover_color: "#00ACEE",
                     text_color: "dark"
                 });
                 jQuery(o).html(optionName);
