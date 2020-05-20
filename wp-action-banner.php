@@ -521,7 +521,7 @@ if (!function_exists('action_banner_shortcode')) {
                             $out .= 'center';
                             break;
                     }
-                    $out .= '">;
+                    $out .= '">
                         <div class="ab-header">' . $header . '</div>
                         <div class="ab-text">' . $text . '</div>
                         <div class="ab-buttons">';
