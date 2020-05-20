@@ -215,7 +215,7 @@ if (!function_exists('slides_meta')) {
                 <td>
                     <input id="slides-input" type="hidden" name="slides" value=""/>
                     <select id="select-input">
-                        <option value="-1"><?php echo __('elect slide', 'plugin-action-banner');?></option>
+                        <option value="-1"><?php echo __('Select slide', 'plugin-action-banner');?></option>
                         <?php foreach ($slides['items'] as $num => $slide): ?>
                             <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
                         <?php endforeach; ?>
