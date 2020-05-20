@@ -18,6 +18,8 @@ class WP_Action_Banner{
         add_action('plugins_loaded', array($this, 'init_texdomain'));
         add_action('wp_enqueue_scripts', array($this, 'register_styles'), 10);
         add_action('wp_enqueue_scripts', array($this, 'register_scripts'), 10);
+        add_action('admin_enqueue_scripts', array($this, 'register_admin_styles'), 10);
+        add_action('admin_enqueue_scripts', array($this, 'register_admin_scripts'), 10);
     }
 
     public function init_texdomain() {
@@ -34,6 +36,16 @@ class WP_Action_Banner{
     public function register_scripts() {
         wp_register_script( 'banner-scripts', plugin_dir_url( __FILE__ ).'assets/js/ab-scripts.js' );  
         wp_enqueue_script( 'banner-scripts' );  
+    }
+
+    public function register_admin_styles() {
+        wp_register_style('designer-admin-style', plugin_dir_url( __FILE__ ).'assets/css/ab-admin-styles.css');
+        wp_enqueue_style('designer-admin-style');
+    }
+
+    public function register_admin_scripts() {
+        wp_register_script( 'designer-admin-script', plugin_dir_url( __FILE__ ).'assets/js/ab-admin-scripts.js' );  
+        wp_enqueue_script( 'designer-admin-script' );  
     }
 }
 

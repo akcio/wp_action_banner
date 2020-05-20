@@ -1,0 +1,46 @@
+.action-banner{width:100%;margin-bottom:1em;position:relative}
+.action-banner div.ab-slide{background-size:cover;background-position:center;position:absolute;left:0;top:0;width:100%;height:100%;border-radius:5px;overflow:hidden}
+.action-banner div.ab-slide div.ab-blackout{position:relative;width:100%;height:100%}
+.action-banner div.ab-slide div.ab-wrapper{position:absolute;top:50%;transform:translateY(-50%)}
+.action-banner div.ab-slide div.ab-wrapper > :not(:last-child){padding-bottom:25px}
+.action-banner div.ab-slide div.ab-wrapper div.ab-header{font-size:1.5rem;font-weight:700}
+.action-banner div.ab-slide div.ab-wrapper div.ab-text{font-size:1rem}
+.action-banner div.ab-slide div.ab-wrapper div.ab-buttons button{text-decoration:none;outline:none;border:none;margin-bottom:5px;color:#fff;padding:10px 20px;text-decoration:none;outline:none;border:none;border-radius:5px;font-weight:700;transition:.1s linear;font-size:1rem;display:inline}
+
+@media (max-width: 991px) {
+	.action-banner div.ab-slide div.ab-wrapper > :not(:last-child){padding-bottom:10px}
+}
+@media (max-width: 767px) {
+	.action-banner div.ab-slide div.ab-blackout{background-color:rgba(0,0,0,0.4)}
+	.action-banner div.ab-slide div.ab-wrapper{padding:25px}
+	.action-banner div.ab-slide div.ab-wrapper div.ab-header{color:#fff;text-align:center}
+	.action-banner div.ab-slide div.ab-wrapper div.ab-text{color:#fff;text-align:center}
+	.action-banner div.ab-slide div.ab-wrapper div.ab-buttons{text-align:center}
+}
+@media (min-width : 768px) {
+	.action-banner div.ab-slide div.ab-wrapper.light div.ab-header{color:#fff}
+	.action-banner div.ab-slide div.ab-wrapper.light div.ab-text{color:#fff}
+	.action-banner div.ab-slide div.ab-wrapper.dark div.ab-header{color:#212529}
+	.action-banner div.ab-slide div.ab-wrapper.dark div.ab-text{color:#212529}
+
+    .action-banner div.ab-slide div.ab-wrapper.left div.ab-header{text-align:left}
+    .action-banner div.ab-slide div.ab-wrapper.left div.ab-text{text-align:left}
+    .action-banner div.ab-slide div.ab-wrapper.left div.ab-buttons{text-align:left}
+    .action-banner div.ab-slide div.ab-wrapper.center div.ab-header{text-align:center}
+    .action-banner div.ab-slide div.ab-wrapper.center div.ab-text{text-align:center}
+    .action-banner div.ab-slide div.ab-wrapper.center div.ab-buttons{text-align:center}
+    .action-banner div.ab-slide div.ab-wrapper.right div.ab-header{text-align:right}
+    .action-banner div.ab-slide div.ab-wrapper.right div.ab-text{text-align:right}
+    .action-banner div.ab-slide div.ab-wrapper.right div.ab-buttons{text-align:right}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .action-banner div.ab-slide div.ab-wrapper.left{padding:25px 50% 25px 25px}
+    .action-banner div.ab-slide div.ab-wrapper.center{padding:25px}
+    .action-banner div.ab-slide div.ab-wrapper.right{padding:25px 25px 25px 50%}
+}
+@media (min-width: 992px) {
+    .action-banner div.ab-slide div.ab-wrapper.left{padding:50px 50% 50px 50px}
+    .action-banner div.ab-slide div.ab-wrapper.center{padding:50px}
+    .action-banner div.ab-slide div.ab-wrapper.right{padding:50px 50px 50px 50%}
+}
+
