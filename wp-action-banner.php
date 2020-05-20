@@ -454,20 +454,15 @@ if (!function_exists('action_banner_shortcode')) {
             $slides = json_decode($slides, true);
         }
 
-        // TODO Get from PHP!
         $main_height = $custom['main_height'][0];
         $relative_height = $custom['relative_height'][0];
         $timeout = $custom['slide_timeout'][0];
-        $button_color = "#149dde";
-        $button_hover_color = "#00acee";
 
         $out = '<style>
                     .action-banner{height:' . $main_height . 'px}
                     @media (max-width : 767px) {
                         .action-banner{height:' . $relative_height .'px}
                     }
-                    .action-banner div.ab-slide div.ab-wrapper div.ab-buttons button{background-color:' . $button_color . '}
-                    .action-banner div.ab-slide div.ab-wrapper div.ab-buttons button:hover{background-color:' . $button_hover_color . '}
                 </style>
                 <script>
                     var abSlideTimeout = ' . $timeout . ';
@@ -479,9 +474,10 @@ if (!function_exists('action_banner_shortcode')) {
             $text = $slide['text'];
             $buttons = $slide['buttons'];
 
-            // TODO Get from PHP!
-            $label_color = "dark"; // 'dark' or 'light'
-            $horizontal_alignment = "left"; // 'left', 'center' or 'right'
+            $label_color = $slide['text_color']; // 'dark' or 'light'
+            $horizontal_alignment = $slide['h_align']; // 'left', 'center' or 'right'
+            $button_color = $slide['btn_color'];
+            $button_hover_color = $slide['btn_hover_color'];
 
             $out .= '
             <div class="ab-slide" style="background-image: url(' . $img . ');">
@@ -513,12 +509,12 @@ if (!function_exists('action_banner_shortcode')) {
                             $out .= 'center';
                             break;
                     }
-                    $out .= '">
+                    $out .= '">;
                         <div class="ab-header">' . $header . '</div>
                         <div class="ab-text">' . $text . '</div>
                         <div class="ab-buttons">';
                         foreach ($buttons as $name => $link) {
-                            $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>&nbsp;';
+                            $out .= '<button onclick="document.location=\'' . $link . '\'" style="background-color: ' . $button_color . '" onmouseout="this.style.backgroundColor=\'' . $button_hover_color . '\';">' . $name . '</button>&nbsp;';
                         }
                         $out .= '
                         </div>
