@@ -414,25 +414,71 @@ if (!function_exists('action_banner_shortcode')) {
             $slides = json_decode($slides, true);
         }
 
+        // Get from PHP
+        $main_height = 400;
+        $relative_height = 300;
+        $timeout = 5000;
+        $button_color = "#149dde";
+        $button_hover_color = "#00acee";
+
         $out = '<style>
-
-                </style>';
-
-        $out = '<div class="action-banner">';
+                    .action-banner{height:' . $main_height . 'px}
+                    @media (max-width : 767px) {
+                        .action-banner{height:' . $relative_height .'px}
+                    }
+                    .action-banner div.ab-slide div.ab-wrapper div.ab-buttons button{background-color:' . $button_color . '}
+                    .action-banner div.ab-slide div.ab-wrapper div.ab-buttons button:hover{background-color:' . $button_hover_color . '}
+                </style>
+                <script>
+                    var abSlideTimeout = ' . $timeout . ';
+                </script>
+                <div class="action-banner">';
         foreach ($slides['items'] as $slide) {
             $img = $slide['image'];
             $header = $slide['title'];
             $text = $slide['text'];
             $buttons = $slide['buttons'];
+
+            // Get from PHP
+            $label_color = "dark"; // 'dark' or 'light'
+            $horizontal_alignment = "left"; // 'left', 'center' or 'right'
+
             $out .= '
                 <div class="ab-slide" style="background-image: url(' . $img . ');">
                     <div class="ab-blackout">
-                    	<div class="ab-wrapper">
+                    	<div class="ab-wrapper ';
+                        switch ($label_color) {
+                            case 'dark':
+                                $out .= 'dark';
+                                break;
+                            case 'light':
+                                $out .= 'light';
+                                break;
+                            default:
+                                $out .= 'dark';
+                                break;
+                        }
+                        $out .= ' ';
+                        switch ($horizontal_alignment) {
+                            case 'left':
+                                $out .= 'left';
+                                break;
+                            case 'center':
+                                $out .= 'center';
+                                break;
+                            case 'right':
+                                $out .= 'right';
+                                break;
+                            default:
+                                $out .= 'center';
+                                break;
+                        }
+                        $out .= '">
                             <div class="ab-header">' . $header . '</div>
                             <div class="ab-text">' . $text . '</div>
                             <div class="ab-buttons">';
                             foreach ($buttons as $name => $link) {
-                                $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>';
+                                $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>&nbsp;';
                             }
                             $out .= '
                             </div>

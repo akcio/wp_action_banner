@@ -9,6 +9,6 @@ jQuery(document).ready(function( $ ) {
 		    .fadeIn(500)
 		    .end()
 		    .appendTo('.action-banner');
-		},  5000);
+		},  abSlideTimeout);
 	}
 });
