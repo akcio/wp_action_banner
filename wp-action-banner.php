@@ -476,12 +476,16 @@ if (!function_exists('action_banner_shortcode')) {
         $main_height = $custom['main_height'][0];
         $relative_height = $custom['relative_height'][0];
         $timeout = $custom['slide_timeout'][0];
+        $button_color = $custom['btn_color'][0];
+        $button_hover_color = $custom['btn_hover_color'][0];
 
         $out = '<style>
                     .action-banner.banner-' . $rg->id . '{height:' . $main_height . 'px}
                     @media (max-width : 767px) {
                         .action-banner.banner-' . $rg->id . '{height:' . $relative_height .'px}
                     }
+                    .action-banner.banner-' . $rg->id . ' div.ab-slide div.ab-wrapper div.ab-buttons button{background-color:' . $button_color . '}
+                    .action-banner.banner-' . $rg->id . ' div.ab-slide div.ab-wrapper div.ab-buttons button:hover{background-color:' . $button_hover_color . '}
                 </style>
                 <script>
                     var abSlideTimeout = ' . $timeout . ';
@@ -495,8 +499,6 @@ if (!function_exists('action_banner_shortcode')) {
 
             $label_color = $slide['text_color']; // 'dark' or 'light'
             $horizontal_alignment = $slide['h_align']; // 'left', 'center' or 'right'
-            $button_color = $slide['btn_color'];
-            $button_hover_color = $slide['btn_hover_color'];
 
             $out .= '
             <div class="ab-slide" style="background-image: url(' . $img . ');">
@@ -533,7 +535,7 @@ if (!function_exists('action_banner_shortcode')) {
                         <div class="ab-text">' . $text . '</div>
                         <div class="ab-buttons">';
                         foreach ($buttons as $name => $link) {
-                            $out .= '<button onclick="document.location=\'' . $link . '\'" style="background-color: ' . $button_color . '" onmouseout="this.style.backgroundColor=\'' . $button_hover_color . '\';">' . $name . '</button>&nbsp;';
+                            $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>&nbsp;';
                         }
                         $out .= '
                         </div>
