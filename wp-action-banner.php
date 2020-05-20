@@ -125,8 +125,16 @@ if (!function_exists('slides_meta')) {
         ?>
         <p><?php echo __('You can use this shortcode to insert banner', 'plugin-action-banner')?> [action_banner id="<?php echo get_the_ID();?>"]</p>
         <p>
-            <label><?php echo __('Height', 'plugin-action-banner');?></label><br/>
-            <input type="number" name="banner_height" value="0"/>
+            <label><?php echo __('Main height', 'plugin-action-banner');?></label><br/>
+            <input type="number" name="main_height" value="0"/>
+        </p>
+        <p>
+            <label><?php echo __('Relative height', 'plugin-action-banner');?></label><br/>
+            <input type="number" name="relative_height" value="0"/>
+        </p>
+        <p>
+            <label><?php echo __('Slide timeout', 'plugin-action-banner');?></label><br/>
+            <input type="number" name="slide_timeout" value="0"/>
         </p>
         <p><label>Slides:</label><br/>
             <input id="slides-input" type="hidden" name="slides" value=""/>
@@ -156,14 +164,17 @@ if (!function_exists('slides_meta')) {
                 <label for="centerAlign"><?php echo __('Center', 'plugin-action-banner')?></label>
                 <input type="radio" id="rightAlign" name="horizontal_align" value="right"/>
                 <label for="rightAlign"><?php echo __('Right', 'plugin-action-banner')?></label><br>
+
+                <label><?php echo __('Text color', 'plugin-action-banner');?></label><br/>
+                <input type="radio" id="lightColor" checked name="text_color" value="light"/>
+                <label for="lightColor"><?php echo __('Light', 'plugin-action-banner')?></label>
+                <input type="radio" id="darkColor" name="text_color" value="dark"/>
+                <label for="darkColor"><?php echo __('Dark', 'plugin-action-banner')?></label><br>
             	
-            	<label><?php echo __('Vertiacal alignment', 'plugin-action-banner');?></label><br/>
-                <input type="radio" id="topAlign" checked name="vertical_align" value="top"/>
-                <label for="topAlign"><?php echo __('Top', 'plugin-action-banner')?></label>
-                <input type="radio" id="vcenterAlign" name="vertical_align" value="center"/>
-                <label for="vcenterAlign"><?php echo __('Middle', 'plugin-action-banner')?></label>
-                <input type="radio" id="bottomAlign" name="vertical_align" value="bottom"/>
-                <label for="bottomAlign"><?php echo __('Bottom', 'plugin-action-banner')?></label><br>
+            	<label for="btnColor"><?php echo __('Button color', 'plugin-action-banner');?></label><br/>
+                <input type="color" id="btnColor" name="btn_color" />
+                <label for="btnHoverColor"><?php echo __('Button hover color', 'plugin-action-banner');?></label><br/>
+                <input type="color" id="btnHoverColor" name="btn_hover_color" />
 
                 <button id="save-slide" class="button"><?php echo __('Save slide', 'plugin-action-banner')?></button>
             </div>
@@ -198,9 +209,6 @@ if (!function_exists('slides_meta')) {
 
             function checkAndInit() {
                 for (var i = 0; i < slides.length; ++i) {
-                    if (slides[i].v_align === undefined) {
-                        slides[i].v_align = 'center';
-                    }
                     if (slides[i].h_align === undefined) {
                         slides[i].h_align = 'left';
                     }
@@ -215,6 +223,15 @@ if (!function_exists('slides_meta')) {
                     }
                     if (slides[i].text === undefined) {
                         slides[i].text = '';
+                    }
+                    if (slides[i].btn_color === undefined) {
+                        slides[i].btn_color = "#FFFFFF";
+                    }
+                    if (slides[i].btn_hover_color === undefined) {
+                        slides[i].btn_hover_color = "#FFFFFF";
+                    }
+                    if (slides[i].text_color === undefined) {
+                        slides[i].text_color = "dark";
                     }
 
                 }
@@ -232,7 +249,9 @@ if (!function_exists('slides_meta')) {
                     buttons: {},
                     image: "",
                     h_align: "left",
-                    v_align: "center"
+                    btn_color: "#FFFFFF",
+                    btn_hover_color: "#FFFFFF",
+                    text_color: "dark"
                 });
                 jQuery(o).html(optionName);
                 var selectInput = jQuery('#select-input');
@@ -290,7 +309,9 @@ if (!function_exists('slides_meta')) {
                 jQuery('#slide-image').val(slides[currentSlide].image).show();
                 jQuery('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons)).show();
                 jQuery('input[name="horizontal_align"]').prop('checked', false).parent().find('input[name="horizontal_align"][value="' + slides[currentSlide].h_align + '"]').prop('checked', true);
-                jQuery('input[name="vertical_align"]').prop('checked', false).parent().find('input[name="vertical_align"][value="' + slides[currentSlide].v_align + '"]').prop('checked', true);
+                jQuery('input[name="text_color"]').prop('checked', false).parent().find('input[name="text_color"][value="' + slides[currentSlide].text_color + '"]').prop('checked', true);
+                jQuery('#btnColor').val(slides[currentSlide].btn_color);
+                jQuery('#btnHoverColor').val(slides[currentSlide].btn_hover_color);
 
                 jQuery('#add-slide-button').show();
                 jQuery('#slide-buttons-key').show();
@@ -306,7 +327,9 @@ if (!function_exists('slides_meta')) {
                 slides[currentSlide].text = sanitize(jQuery('#slide-text').val());
                 slides[currentSlide].image = (jQuery('#slide-image').val());
                 slides[currentSlide].h_align = jQuery('input[name="horizontal_align"]:checked').val();
-                slides[currentSlide].v_align = jQuery('input[name="vertical_align"]:checked').val();
+                slides[currentSlide].text_color = jQuery('input[name="text_color"]:checked').val();
+                slides[currentSlide].btn_color = jQuery('#btnColor').val();
+                slides[currentSlide].btn_hover_color = jQuery('#btnHoverColor').val();
                 jQuery('#slides-input').val(JSON.stringify({items: slides}));
                 jQuery('#select-input option[value="'+ currentSlide  +'"]').html(slides[currentSlide].title);
                 return false;
@@ -370,13 +393,30 @@ if (!function_exists('save_action_stickers_meta')) {
             return;
         }
 
-        if (!empty($_POST['banner_height'])) {
+        if (!empty($_POST['main_height'])) {
             update_post_meta(
                 $post_id,
-                'banner_height',
-                (int)$_POST['banner_height']
+                'main_height',
+                (int)$_POST['main_height']
             );
         }
+
+        if (!empty($_POST['relative_height'])) {
+            update_post_meta(
+                $post_id,
+                'relative_height',
+                (int)$_POST['relative_height']
+            );
+        }
+
+        if (!empty($_POST['slide_timeout'])) {
+            update_post_meta(
+                $post_id,
+                'slide_timeout',
+                (int)$_POST['slide_timeout']
+            );
+        }
+
 
         if (!empty($_POST['slides'])) {
             $json_encoded = str_replace('\\"', '"', $_POST['slides']);
@@ -415,9 +455,9 @@ if (!function_exists('action_banner_shortcode')) {
         }
 
         // TODO Get from PHP!
-        $main_height = 400;
-        $relative_height = 300;
-        $timeout = 5000;
+        $main_height = $custom['main_height'][0];
+        $relative_height = $custom['relative_height'][0];
+        $timeout = $custom['slide_timeout'][0];
         $button_color = "#149dde";
         $button_hover_color = "#00acee";
 
