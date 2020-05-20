@@ -471,15 +471,15 @@ if (!function_exists('action_banner_shortcode')) {
         $timeout = $custom['slide_timeout'][0];
 
         $out = '<style>
-                    .action-banner{height:' . $main_height . 'px}
+                    .action-banner.banner-' . $rg->id . '{height:' . $main_height . 'px}
                     @media (max-width : 767px) {
-                        .action-banner{height:' . $relative_height .'px}
+                        .action-banner.banner-' . $rg->id . '{height:' . $relative_height .'px}
                     }
                 </style>
                 <script>
                     var abSlideTimeout = ' . $timeout . ';
                 </script>
-                <div class="action-banner">';
+                <div class="action-banner banner-' . $rg->id . '">';
         foreach ($slides['items'] as $slide) {
             $img = $slide['image'];
             $header = $slide['title'];
