@@ -444,47 +444,47 @@ if (!function_exists('action_banner_shortcode')) {
             $horizontal_alignment = "left"; // 'left', 'center' or 'right'
 
             $out .= '
-                <div class="ab-slide" style="background-image: url(' . $img . ');">
-                    <div class="ab-blackout">
-                    	<div class="ab-wrapper ';
-                        switch ($label_color) {
-                            case 'dark':
-                                $out .= 'dark';
-                                break;
-                            case 'light':
-                                $out .= 'light';
-                                break;
-                            default:
-                                $out .= 'dark';
-                                break;
+            <div class="ab-slide" style="background-image: url(' . $img . ');">
+                <div class="ab-blackout">
+                	<div class="ab-wrapper ';
+                    switch ($label_color) {
+                        case 'dark':
+                            $out .= 'dark';
+                            break;
+                        case 'light':
+                            $out .= 'light';
+                            break;
+                        default:
+                            $out .= 'dark';
+                            break;
+                    }
+                    $out .= ' ';
+                    switch ($horizontal_alignment) {
+                        case 'left':
+                            $out .= 'left';
+                            break;
+                        case 'center':
+                            $out .= 'center';
+                            break;
+                        case 'right':
+                            $out .= 'right';
+                            break;
+                        default:
+                            $out .= 'center';
+                            break;
+                    }
+                    $out .= '">
+                        <div class="ab-header">' . $header . '</div>
+                        <div class="ab-text">' . $text . '</div>
+                        <div class="ab-buttons">';
+                        foreach ($buttons as $name => $link) {
+                            $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>&nbsp;';
                         }
-                        $out .= ' ';
-                        switch ($horizontal_alignment) {
-                            case 'left':
-                                $out .= 'left';
-                                break;
-                            case 'center':
-                                $out .= 'center';
-                                break;
-                            case 'right':
-                                $out .= 'right';
-                                break;
-                            default:
-                                $out .= 'center';
-                                break;
-                        }
-                        $out .= '">
-                            <div class="ab-header">' . $header . '</div>
-                            <div class="ab-text">' . $text . '</div>
-                            <div class="ab-buttons">';
-                            foreach ($buttons as $name => $link) {
-                                $out .= '<button onclick="document.location=\'' . $link . '\'">' . $name . '</button>&nbsp;';
-                            }
-                            $out .= '
-                            </div>
+                        $out .= '
                         </div>
                     </div>
-                </div>';
+                </div>
+            </div>';
         }
         $out .= '</div>';
         return $out;
