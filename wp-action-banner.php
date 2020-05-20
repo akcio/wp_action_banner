@@ -414,7 +414,7 @@ if (!function_exists('action_banner_shortcode')) {
             $slides = json_decode($slides, true);
         }
 
-        // Get from PHP
+        // TODO Get from PHP!
         $main_height = 400;
         $relative_height = 300;
         $timeout = 5000;
@@ -439,7 +439,7 @@ if (!function_exists('action_banner_shortcode')) {
             $text = $slide['text'];
             $buttons = $slide['buttons'];
 
-            // Get from PHP
+            // TODO Get from PHP!
             $label_color = "dark"; // 'dark' or 'light'
             $horizontal_alignment = "left"; // 'left', 'center' or 'right'
 
@@ -486,15 +486,6 @@ if (!function_exists('action_banner_shortcode')) {
                     </div>
                 </div>';
         }
-
-        /* Only for test! */
-        /*$out .= '
-            <div class="slide">
-                <div class="ab-wrapper">
-                    TEST
-                </div>
-            </div>';*/
-
         $out .= '</div>';
         return $out;
     }
