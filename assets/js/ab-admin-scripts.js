@@ -2,27 +2,6 @@ jQuery(document).ready(function( $ ) {
 	document.getElementById("slides-input").value = JSON.stringify({items: slides});
     var lastSlideLength = slides.length;
     var currentSlide = -1;
-
-    $('#add-slide').click(onClickAddSlide);
-    $('#select-input').change(onChangeSlideSelect);
-    $('#remove-slide').click(onRemoveSlide);
-    $('#save-slide').click(onClickSaveSlide);
-    $('#add-slide-button').click(onClickAddButton);
-    $('#add-slide-image').click(onClickAddImageButton);
-
-    function sanitize(string) {
-        const map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#x27;',
-            "/": '&#x2F;',
-        };
-        const reg = /[&<>"'/]/ig;
-        return string.replace(reg, (match)=>(map[match]));
-    }
-
     checkAndInit();
 
     function checkAndInit() {
@@ -49,10 +28,30 @@ jQuery(document).ready(function( $ ) {
         }
     }
 
+    function sanitize(string) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            "/": '&#x2F;',
+        };
+        const reg = /[&<>"'/]/ig;
+        return string.replace(reg, (match)=>(map[match]));
+    }
+
+    $('#add-slide').click(onClickAddSlide);
+    $('#select-input').change(onChangeSlideSelect);
+    $('#remove-slide').click(onRemoveSlide);
+    $('#save-slide').click(onClickSaveSlide);
+    $('#add-slide-button').click(onClickAddButton);
+    $('#add-slide-image').click(onClickAddImageButton);
+
     function onClickAddSlide() {
         var optionName = "Slide " + slides.length;
         var o = new Option(optionName, slides.length);
-        if (lastSlideLength == 0) {
+        if (lastSlideLength === 0) {
             o.selected = true;
         }
         slides.push({
@@ -66,7 +65,7 @@ jQuery(document).ready(function( $ ) {
         $(o).html(optionName);
         var selectInput = jQuery('#select-input');
         selectInput.append(o);
-        if (lastSlideLength == 0) {
+        if (lastSlideLength === 0) {
             selectInput.change();
         }
         lastSlideLength = slides.length;
@@ -98,7 +97,6 @@ jQuery(document).ready(function( $ ) {
         $('#slides-input').val(JSON.stringify({items: slides}));
 
         onChangeSlideSelect();
-
         return false;
     }
 
@@ -151,8 +149,7 @@ jQuery(document).ready(function( $ ) {
         return false;
     }
 
-    function onClickAddImageButton(e) {
-        e.preventDefault();
+    function onClickAddImageButton() {
         var image = wp.media({ 
             title: 'Upload Image',
             multiple: false
