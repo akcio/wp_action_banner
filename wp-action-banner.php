@@ -117,11 +117,11 @@ if (!function_exists('slides_meta')) {
         global $post;
         $custom = get_post_custom($post->ID);
         $slides = $custom["slides"][0];
-        $main_height = $custom['main_height'];
-        $relative_height = $custom['relative_height'];
-        $timeout = $custom['slide_timeout'];
-        $btn_color = $custom['btn_color'];
-        $btn_hover_color = $custom['btn_hover_color'];
+        $main_height = $custom['main_height'][0];
+        $relative_height = $custom['relative_height'][0];
+        $timeout = $custom['slide_timeout'][0];
+        $btn_color = $custom['btn_color'][0];
+        $btn_hover_color = $custom['btn_hover_color'][0];
         if (empty($slides)) {
             $slides = Array('items' => Array());
         } else {
