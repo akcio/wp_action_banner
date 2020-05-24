@@ -3,7 +3,7 @@
 Plugin Name: Action Banner
 Plugin Script: wp-action-banner.php
 Description: Allows you to create custom banners, which consist of an image, text, a link, and a call to action.  Custom banners are easily output via shortcodes.
-Version: 0.2.2
+Version: 0.2.3
 Author: Разработчики занаклейкой.рф
 Text Domain: plugin-action-banner
 */
@@ -316,7 +316,9 @@ if (!function_exists('slides_meta')) {
         <button id="save-slide" class="button button-primary"><?php echo __('Save slide', 'plugin-action-banner')?></button>
 
         <script>
-            var slides = <?php echo json_encode($slides['items']);?>;
+            jQuery(function(){
+                setSlides(<?php echo json_encode($slides['items']);?>);
+            });
         </script>
         <?php
     }

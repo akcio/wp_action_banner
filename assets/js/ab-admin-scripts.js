@@ -1,33 +1,41 @@
-jQuery(document).ready(function( $ ) {
-	document.getElementById("slides-input").value = JSON.stringify({items: slides});
-    var lastSlideLength = slides.length;
-    var currentSlide = -1;
-    checkAndInit();
+var slides = null;
+var lastSlideLength = 0;
+var currentSlide = -1;
 
-    function checkAndInit() {
-        for (var i = 0; i < slides.length; ++i) {
-            if (slides[i].h_align === undefined) {
-                slides[i].h_align = 'left';
-            }
-            if (slides[i].image === undefined) {
-                slides[i].image = '';
-            }
-            if (slides[i].buttons === undefined) {
-                slides[i].buttons = {};
-            }
-            if (slides[i].title === undefined) {
-                slides[i].title = '';
-            }
-            if (slides[i].text === undefined) {
-                slides[i].text = '';
-            }
-            if (slides[i].text_color === undefined) {
-                slides[i].text_color = "dark";
-            }
-
+function checkAndInit() {
+    for (var i = 0; i < slides.length; ++i) {
+        if (slides[i].h_align === undefined) {
+            slides[i].h_align = 'left';
         }
-    }
+        if (slides[i].image === undefined) {
+            slides[i].image = '';
+        }
+        if (slides[i].buttons === undefined) {
+            slides[i].buttons = {};
+        }
+        if (slides[i].title === undefined) {
+            slides[i].title = '';
+        }
+        if (slides[i].text === undefined) {
+            slides[i].text = '';
+        }
+        if (slides[i].text_color === undefined) {
+            slides[i].text_color = "dark";
+        }
 
+    }
+}
+
+function setSlides(newSlides) {
+    slides = newSlides;
+    document.getElementById("slides-input").value = JSON.stringify({items: slides});
+
+    lastSlideLength = slides.length;
+
+    checkAndInit();
+}
+
+jQuery(document).ready(function( $ ) {
     function sanitize(string) {
         const map = {
             '&': '&amp;',
