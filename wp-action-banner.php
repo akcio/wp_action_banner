@@ -226,90 +226,94 @@ if (!function_exists('slides_meta')) {
                 </td>
             </tr>
         </table>
-        <table id="slide-params-form" class="form-table" style="display: none;">
-            <tr>
-                <th>
-                    <label><?php echo __('Slide title', 'plugin-action-banner');?></label>
-                </th>
-                <td>
-                    <input class="regular-text" type="text" id="slide-title"/>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label><?php echo __('Slide text', 'plugin-action-banner');?></label>
-                </th>
-                <td>
-                    <textarea class="regular-text" id="slide-text"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label><?php echo __('Slide image', 'plugin-action-banner');?></label>
-                </th>
-                <td>
-                    <input class="regular-text" type="text" id="slide-image"/><br>
-                    <button id="add-slide-image" class="button"><?php echo __('From media library', 'plugin-action-banner'); ?></button>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label><?php echo __('Horizontal alignment', 'plugin-action-banner');?></label>
-                </th>
-                <td>
-                    <label>
-                        <input type="radio" id="leftAlign" checked name="horizontal_align" value="left"/>
-                        <span for="leftAlign"><?php echo __('Left', 'plugin-action-banner')?></span>
-                    </label>
-                    <br>
-                    <label>
-                        <input type="radio" id="centerAlign" name="horizontal_align" value="center"/>
-                        <span for="centerAlign"><?php echo __('Center', 'plugin-action-banner')?></span>
-                    </label>
-                    <br>
-                    <label>
-                        <input type="radio" id="rightAlign" name="horizontal_align" value="right"/>
-                        <span for="rightAlign"><?php echo __('Right', 'plugin-action-banner')?></span>
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label><?php echo __('Text color', 'plugin-action-banner');?></label>
-                </th>
-                <td>
-                    <label>
-                        <input type="radio" id="lightColor" checked name="text_color" value="light"/>
-                        <span for="lightColor"><?php echo __('Light', 'plugin-action-banner')?></span>
-                    <br>
-                    <label>
-                        <input type="radio" id="darkColor" name="text_color" value="dark"/>
-                        <span for="darkColor"><?php echo __('Dark', 'plugin-action-banner')?></span>
-                    </label>
-                </td>
-            </tr>
-        </table>
-        <div id="slide-buttons"></div>
-        <table id="buttons-param-table" class="form-table">
-            <tr>
-                <th>
-                    <label><?php echo __('Button name', 'plugin-action-banner');?></label>
-                </th>
-                <td>
-                    <input class="regular-text" type="text" id="slide-buttons-key" style="display: none;"/>
-                    <p class="description"><?php echo __('Button label.', 'plugin-action-banner')?></p>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label><?php echo __('Button link', 'plugin-action-banner');?></label>
-                </th>
-                <td>
-                    <input class="regular-text" type="text" id="slide-button-value" style="display: none;"/>
-                    <p class="description"><?php echo __('Full or relative link.', 'plugin-action-banner')?></p>
-                </td>
-            </tr>
-        </table>
+        <div class="frame-container">
+            <table id="slide-params-form" class="form-table" style="display: none;">
+                <tr>
+                    <th>
+                        <label><?php echo __('Slide title', 'plugin-action-banner');?></label>
+                    </th>
+                    <td>
+                        <input class="regular-text" type="text" id="slide-title"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label><?php echo __('Slide text', 'plugin-action-banner');?></label>
+                    </th>
+                    <td>
+                        <textarea class="regular-text" id="slide-text"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label><?php echo __('Slide image', 'plugin-action-banner');?></label>
+                    </th>
+                    <td>
+                        <input class="regular-text" type="text" id="slide-image"/><br>
+                        <button id="add-slide-image" class="button"><?php echo __('From media library', 'plugin-action-banner'); ?></button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label><?php echo __('Horizontal alignment', 'plugin-action-banner');?></label>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="radio" id="leftAlign" checked name="horizontal_align" value="left"/>
+                            <span for="leftAlign"><?php echo __('Left', 'plugin-action-banner')?></span>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" id="centerAlign" name="horizontal_align" value="center"/>
+                            <span for="centerAlign"><?php echo __('Center', 'plugin-action-banner')?></span>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" id="rightAlign" name="horizontal_align" value="right"/>
+                            <span for="rightAlign"><?php echo __('Right', 'plugin-action-banner')?></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label><?php echo __('Text color', 'plugin-action-banner');?></label>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="radio" id="lightColor" checked name="text_color" value="light"/>
+                            <span for="lightColor"><?php echo __('Light', 'plugin-action-banner')?></span>
+                        <br>
+                        <label>
+                            <input type="radio" id="darkColor" name="text_color" value="dark"/>
+                            <span for="darkColor"><?php echo __('Dark', 'plugin-action-banner')?></span>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+            <div id="slide-buttons"></div>
+            <div class="frame-container">
+                <table id="buttons-param-table" class="form-table">
+                    <tr>
+                        <th>
+                            <label><?php echo __('Button name', 'plugin-action-banner');?></label>
+                        </th>
+                        <td>
+                            <input class="regular-text" type="text" id="slide-buttons-key" style="display: none;"/>
+                            <p class="description"><?php echo __('Button label.', 'plugin-action-banner')?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label><?php echo __('Button link', 'plugin-action-banner');?></label>
+                        </th>
+                        <td>
+                            <input class="regular-text" type="text" id="slide-button-value" style="display: none;"/>
+                            <p class="description"><?php echo __('Full or relative link.', 'plugin-action-banner')?></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         <button id="add-slide-button" class="button" style="display: none;"><?php echo __('Add button', 'plugin-action-banner');?></button>
         <br>
 
