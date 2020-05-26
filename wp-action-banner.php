@@ -214,7 +214,7 @@ if (!function_exists('slides_meta')) {
                 </th>
                 <td>
                     <input id="slides-input" type="hidden" name="slides" value=""/>
-                    <select id="select-input">
+                    <select id="select-slide" class="regular-text">
                         <option value="-1"><?php echo __('Select slide', 'plugin-action-banner');?></option>
                         <?php foreach ($slides['items'] as $num => $slide): ?>
                             <option value="<?php echo $num;?>"><?php echo $slide['title']?></option>
@@ -226,8 +226,8 @@ if (!function_exists('slides_meta')) {
                 </td>
             </tr>
         </table>
-        <div class="frame-container">
-            <table id="slide-params-form" class="form-table" style="display: none;">
+        <div id="slide-params" class="frame-container" style="display: none">
+            <table id="slide-params-form" class="form-table">
                 <tr>
                     <th>
                         <label><?php echo __('Slide title', 'plugin-action-banner');?></label>
@@ -289,16 +289,31 @@ if (!function_exists('slides_meta')) {
                         </label>
                     </td>
                 </tr>
+                <tr>
+                    <th>
+                        <label><?php echo __('Button', 'plugin-action-banner');?></label>
+                    </th>
+                    <td>
+                        <select id="select-button" class="regular-text">
+                            <option value="-1"><?php echo __('Select buton', 'plugin-action-banner');?></option>
+                        </select>
+                        <br>
+                        <button id="add-button" class="button"><?php echo __('Add button', 'plugin-action-banner'); ?></button>
+                        <button id="remove-button" class="button"><?php echo __('Remove button', 'plugin-action-banner');?></button>
+                    </td>
+                </tr>
             </table>
+
             <div id="slide-buttons"></div>
-            <div class="frame-container">
+
+            <div id="button-params" class="frame-container" style="display: none">
                 <table id="buttons-param-table" class="form-table">
                     <tr>
                         <th>
                             <label><?php echo __('Button name', 'plugin-action-banner');?></label>
                         </th>
                         <td>
-                            <input class="regular-text" type="text" id="slide-buttons-key" style="display: none;"/>
+                            <input class="regular-text" type="text" id="button-key"/>
                             <p class="description"><?php echo __('Button label.', 'plugin-action-banner')?></p>
                         </td>
                     </tr>
@@ -307,20 +322,19 @@ if (!function_exists('slides_meta')) {
                             <label><?php echo __('Button link', 'plugin-action-banner');?></label>
                         </th>
                         <td>
-                            <input class="regular-text" type="text" id="slide-button-value" style="display: none;"/>
+                            <input class="regular-text" type="text" id="button-value"/>
                             <p class="description"><?php echo __('Full or relative link.', 'plugin-action-banner')?></p>
                         </td>
                     </tr>
                 </table>
             </div>
+            <br>
+            <button id="save-slide" class="button button-primary"><?php echo __('Save slide', 'plugin-action-banner')?></button>
         </div>
-        <button id="add-slide-button" class="button" style="display: none;"><?php echo __('Add button', 'plugin-action-banner');?></button>
-        <br>
 
-        <button id="save-slide" class="button button-primary"><?php echo __('Save slide', 'plugin-action-banner')?></button>
 
         <script>
-            jQuery(function(){
+            jQuery(document).ready(function($) {
                 setSlides(<?php echo json_encode($slides['items']);?>);
             });
         </script>

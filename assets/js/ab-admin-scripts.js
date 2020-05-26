@@ -1,6 +1,14 @@
 var slides = null;
 var lastSlideLength = 0;
 var currentSlide = -1;
+var currentButtonName = "";
+
+function setSlides(newSlides) {
+    slides = newSlides;
+    jQuery('#slides-input').val(JSON.stringify({items: slides}));
+    lastSlideLength = slides.length;
+    checkAndInit();
+}
 
 function checkAndInit() {
     for (var i = 0; i < slides.length; ++i) {
@@ -22,20 +30,10 @@ function checkAndInit() {
         if (slides[i].text_color === undefined) {
             slides[i].text_color = "dark";
         }
-
     }
 }
 
-function setSlides(newSlides) {
-    slides = newSlides;
-    document.getElementById("slides-input").value = JSON.stringify({items: slides});
-
-    lastSlideLength = slides.length;
-
-    checkAndInit();
-}
-
-jQuery(document).ready(function( $ ) {
+jQuery(document).ready(function($) {
     function sanitize(string) {
         const map = {
             '&': '&amp;',
@@ -49,12 +47,18 @@ jQuery(document).ready(function( $ ) {
         return string.replace(reg, (match)=>(map[match]));
     }
 
+    $('#select-slide').change(onChangeSlideSelect);
     $('#add-slide').click(onClickAddSlide);
-    $('#select-input').change(onChangeSlideSelect);
     $('#remove-slide').click(onRemoveSlide);
-    $('#save-slide').click(onClickSaveSlide);
-    $('#add-slide-button').click(onClickAddButton);
     $('#add-slide-image').click(onClickAddImageButton);
+    
+    $('#select-button').change(onChangeButtonSelect);
+    $('#add-button').click(onClickAddButton);
+    $('#remove-button').click(onClickRemoveButton);
+    $('#button-key').change(onChangeButtonKey);
+    $('#button-value').change(onChangeButtonValue);
+
+    $('#save-slide').click(onClickSaveSlide);
 
     function onClickAddSlide() {
         var optionName = "Slide " + slides.length;
@@ -71,7 +75,7 @@ jQuery(document).ready(function( $ ) {
             text_color: "dark"
         });
         $(o).html(optionName);
-        var selectInput = jQuery('#select-input');
+        var selectInput = $('#select-slide');
         selectInput.append(o);
         if (lastSlideLength === 0) {
             selectInput.change();
@@ -83,14 +87,12 @@ jQuery(document).ready(function( $ ) {
 
     function onRemoveSlide() {
         if (currentSlide >= slides.length || currentSlide < 0) {
-            $('#slide-params-form').hide();
-            $('#slide-buttons').hide();
-            $('#add-slide-button').hide();
-            $('#slide-buttons-key').hide();
-            $('#slide-button-value').hide();
+            $('#slide-params').hide();
+            //$('#add-slide-button').hide();
+            $('#button-params').hide();
             return;
         }
-        var selectInput = $('#select-input');
+        var selectInput = $('#select-slide');
         selectInput.find('option:selected').remove();
         selectInput.find('option[value="-1"]').prop('selected', true);
         var newSlides = [];
@@ -105,56 +107,35 @@ jQuery(document).ready(function( $ ) {
         $('#slides-input').val(JSON.stringify({items: slides}));
 
         onChangeSlideSelect();
-        return false;
     }
 
     function onChangeSlideSelect() {
-        var itemNumber = $('#select-input').val();
+        var itemNumber = $('#select-slide').val();
         if (itemNumber >= slides.length || itemNumber < 0) {
-            $('#slide-params-form').hide();
-            $('#slide-buttons').hide();
-            $('#add-slide-button').hide();
-            $('#slide-buttons-key').hide();
-            $('#slide-button-value').hide();
+            $('#slide-params').hide();
             $('#remove-slide').hide();
-            return;
+            $('#button-params').hide();
+        } else {
+            currentSlide = itemNumber;
+            $('#slide-title').val(slides[currentSlide].title).show();
+            $('#slide-text').val(slides[currentSlide].text).show();
+            $('#slide-image').val(slides[currentSlide].image).show();
+            $('input[name="horizontal_align"]').prop('checked', false).parent().find('input[name="horizontal_align"][value="' + slides[currentSlide].h_align + '"]').prop('checked', true);
+            $('input[name="text_color"]').prop('checked', false).parent().find('input[name="text_color"][value="' + slides[currentSlide].text_color + '"]').prop('checked', true);
+            
+            // Clear slide button options
+            $('#select-button option').remove('[value!="-1"]');
+
+            // Add slide button options
+            var buttons = slides[currentSlide].buttons;
+            for (key in buttons) {
+                var option = new Option(key, key); 
+                $('#select-button').append($(option));
+            }
+
+            $('#slide-params').show();
+            $('#remove-slide').show();
         }
-        currentSlide = itemNumber;
-        $('#slide-title').val(slides[currentSlide].title).show();
-        $('#slide-text').val(slides[currentSlide].text).show();
-        $('#slide-image').val(slides[currentSlide].image).show();
-        $('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons)).show();
-        $('input[name="horizontal_align"]').prop('checked', false).parent().find('input[name="horizontal_align"][value="' + slides[currentSlide].h_align + '"]').prop('checked', true);
-        $('input[name="text_color"]').prop('checked', false).parent().find('input[name="text_color"][value="' + slides[currentSlide].text_color + '"]').prop('checked', true);
-
-        $('#add-slide-button').show();
-        $('#slide-buttons-key').show();
-        $('#slide-button-value').show();
-        $('#slide-params-form').show();
-        $('#remove-slide').show();
-        //TODO: buttons
-    }
-
-    function onClickSaveSlide() {
-
-        slides[currentSlide].title = sanitize($('#slide-title').val());
-        slides[currentSlide].text = sanitize($('#slide-text').val());
-        slides[currentSlide].image = ($('#slide-image').val());
-        slides[currentSlide].h_align = $('input[name="horizontal_align"]:checked').val();
-        slides[currentSlide].text_color = $('input[name="text_color"]:checked').val();
-        $('#slides-input').val(JSON.stringify({items: slides}));
-        $('#select-input option[value="'+ currentSlide  +'"]').html(slides[currentSlide].title);
-        return false;
-    }
-
-    function onClickAddButton() {
-        var key = $('#slide-buttons-key').val();
-        var value = $('#slide-button-value').val();
-        slides[currentSlide].buttons[key] = value;
-        $('#slide-buttons-key').val("");
-        $('#slide-button-value').val("");
-        $('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
-        return false;
     }
 
     function onClickAddImageButton() {
@@ -169,4 +150,60 @@ jQuery(document).ready(function( $ ) {
             $('#slide-image').val(image_url);
         });
     }
+
+    function onClickSaveSlide() {
+        slides[currentSlide].title = sanitize($('#slide-title').val());
+        slides[currentSlide].text = sanitize($('#slide-text').val());
+        slides[currentSlide].image = ($('#slide-image').val());
+        slides[currentSlide].h_align = $('input[name="horizontal_align"]:checked').val();
+        slides[currentSlide].text_color = $('input[name="text_color"]:checked').val();
+        $('#slides-input').val(JSON.stringify({items: slides}));
+        $('#select-slide option[value="'+ currentSlide  +'"]').html(slides[currentSlide].title);
+    }
+
+    function onClickAddButton() {
+        /*var key = $('#slide-buttons-key').val();
+        var value = $('#slide-button-value').val();
+        slides[currentSlide].buttons[key] = value;
+        $('#slide-buttons-key').val("");
+        $('#slide-button-value').val("");
+        $('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
+        return false;*/
+    }
+
+    function onClickRemoveButton() {
+
+    }
+
+    function onChangeButtonSelect() {
+        var itemKey = $('#select-button').val();
+        var buttons = slides[currentSlide].buttons;
+        if (itemKey >= slides.length || itemKey < 0) {
+            $('#button-params').hide();
+            $('#remove-slide').hide();
+        } else {
+            currentButtonName = itemKey;
+            $('#button-key').val(currentButtonName);
+            $('#button-value').val(buttons[currentButtonName]);
+
+            $('#button-params').show();
+            $('#remove-slide').show();
+        }
+    }
+
+    function onChangeButtonKey() {
+        // Delete old value
+        delete slides[currentSlide].buttons[currentButtonName];
+
+        // Create new value and reset option
+        var buttonName = $(this).val();
+        slides[currentSlide].buttons[buttonName] = $('#button-value').val();
+        $('#select-button option[value="'+ currentButtonName  +'"]').val(buttonName).text(buttonName);
+        currentButtonName = buttonName;
+    }
+
+    function onChangeButtonValue() {
+        slides[currentSlide].buttons[currentButtonName] = $(this).val();
+    }
+
 });
