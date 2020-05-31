@@ -172,7 +172,7 @@ jQuery(document).ready(function($) {
     }
 
     function onClickAddButton() {
-        var key = "Button " + (Object.keys(slides[currentSlide].buttons).length + 1);
+        var key = getNewButtonName();
 
         slides[currentSlide].buttons[key] = key; // FIX Key equals value (no button id yet)
         var option = new Option(key, key); 
@@ -181,6 +181,16 @@ jQuery(document).ready(function($) {
         onChangeButtonSelect();
 
         return false; // FIX Do not submit form
+    }
+
+    // Get free button name
+    function getNewButtonName() {
+        var number = Object.keys(slides[currentSlide].buttons).length + 1;
+        var name = "Button";
+        while (slides[currentSlide].buttons[name + " " + number] !== undefined) {
+            number++;
+        }
+        return name + " " + number;
     }
 
     function onClickRemoveButton() {
