@@ -54,6 +54,8 @@ jQuery(document).ready(function($) {
     $('#select-slide').change(onChangeSlideSelect);
     $('#add-slide').click(onClickAddSlide);
     $('#remove-slide').click(onRemoveSlide);
+    $('#slide-up').click(onSlideUp);
+    $('#slide-down').click(onSlideDown);
     $('#add-slide-image').click(onClickAddImageButton);
     
     $('#select-button').change(onChangeButtonSelect);
@@ -100,12 +102,28 @@ jQuery(document).ready(function($) {
         return false; // FIX Do not submit form
     }
 
+    function onSlideUp() {
+
+
+        updateSlides();
+
+        return false; // FIX Do not submit form
+    }
+
+    function onSlideDown() {
+        updateSlides();
+
+        return false; // FIX Do not submit form
+    }
+
     function onChangeSlideSelect() {
         var itemNumber = $('#select-slide').val();
         currentSlide = itemNumber;
         if (itemNumber >= slides.length || itemNumber < 0) {
             $('#slide-params').hide();
             $('#remove-slide').hide();
+            $('#slide-up').hide();
+            $('#slide-down').hide();
             $('#button-params').hide();
         } else {
             $('#slide-title').val(slides[currentSlide].title).show();
@@ -127,6 +145,16 @@ jQuery(document).ready(function($) {
 
             $('#slide-params').show();
             $('#remove-slide').show();
+
+            if (itemNumber > 0)
+                $('#slide-up').show();
+            else
+                $('#slide-up').hide();
+
+            if (itemNumber < slides.length - 1) 
+                $('#slide-down').show();
+            else
+                $('#slide-down').hide();
         }
     }
 

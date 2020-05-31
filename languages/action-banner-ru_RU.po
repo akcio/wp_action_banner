@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Action Banner\n"
-"POT-Creation-Date: 2020-05-31 16:02+0500\n"
-"PO-Revision-Date: 2020-05-31 16:02+0500\n"
+"POT-Creation-Date: 2020-05-31 16:12+0500\n"
+"PO-Revision-Date: 2020-05-31 16:12+0500\n"
 "Last-Translator: \n"
 "Language-Team: Разработчики занаклейкой.рф\n"
 "Language: ru_RU\n"
@@ -120,78 +120,86 @@ msgstr "Добавить слайд"
 msgid "Remove slide"
 msgstr "Удалить слайд"
 
-#: wp-action-banner.php:234
+#: wp-action-banner.php:227
+msgid "Move up"
+msgstr "Поднять вверх"
+
+#: wp-action-banner.php:228
+msgid "Move down"
+msgstr "Опустить вниз"
+
+#: wp-action-banner.php:236
 msgid "Slide title"
 msgstr "Заголовок слайда"
 
-#: wp-action-banner.php:242
+#: wp-action-banner.php:244
 msgid "Slide text"
 msgstr "Текст слайда"
 
-#: wp-action-banner.php:250
+#: wp-action-banner.php:252
 msgid "Slide image"
 msgstr "Изображение слайда"
 
-#: wp-action-banner.php:254
+#: wp-action-banner.php:256
 msgid "From media library"
 msgstr "Загрузить из медиабиблиотеки"
 
-#: wp-action-banner.php:259
+#: wp-action-banner.php:261
 msgid "Horizontal alignment"
 msgstr "Горизонтальное выраванивание"
 
-#: wp-action-banner.php:264
+#: wp-action-banner.php:266
 msgid "Left"
 msgstr "Слева"
 
-#: wp-action-banner.php:269
+#: wp-action-banner.php:271
 msgid "Center"
 msgstr "По центру"
 
-#: wp-action-banner.php:274
+#: wp-action-banner.php:276
 msgid "Right"
 msgstr "Справа"
 
-#: wp-action-banner.php:280
+#: wp-action-banner.php:282
 msgid "Text color"
 msgstr "Оттенок  текста"
 
-#: wp-action-banner.php:285
+#: wp-action-banner.php:287
 msgid "Light"
 msgstr "Светлый"
 
-#: wp-action-banner.php:289
+#: wp-action-banner.php:291
 msgid "Dark"
 msgstr "Темный"
 
-#: wp-action-banner.php:295
+#: wp-action-banner.php:297
 msgid "Buttons"
 msgstr "Кнопки"
 
-#: wp-action-banner.php:299
+#: wp-action-banner.php:301
 msgid "Select buton"
 msgstr "Выберите кнопку"
 
-#: wp-action-banner.php:302
+#: wp-action-banner.php:304
 msgid "Add button"
 msgstr "Добавить кнопку"
 
-#: wp-action-banner.php:303
+#: wp-action-banner.php:305
 msgid "Remove button"
 msgstr "Удалить кнопку"
 
-#: wp-action-banner.php:314
+#: wp-action-banner.php:316
 msgid "Button name"
 msgstr "Название кнопки"
 
-#: wp-action-banner.php:318
+#: wp-action-banner.php:320
 msgid "Button label."
 msgstr "Надпись на кнопке."
 
-#: wp-action-banner.php:323
+#: wp-action-banner.php:325
 msgid "Button link"
 msgstr "Ссылка"
 
-#: wp-action-banner.php:327
+#: wp-action-banner.php:329
 msgid "Full or relative link."
 msgstr "Полная или относительная ссылка."
