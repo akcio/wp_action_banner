@@ -299,7 +299,7 @@ if (!function_exists('slides_meta')) {
                         </select>
                         <br>
                         <button id="add-button" class="button"><?php echo __('Add button', 'plugin-action-banner'); ?></button>
-                        <button id="remove-button" class="button"><?php echo __('Remove button', 'plugin-action-banner');?></button>
+                        <button id="remove-button" class="button" style="display:none"><?php echo __('Remove button', 'plugin-action-banner');?></button>
                     </td>
                 </tr>
             </table>
@@ -328,8 +328,6 @@ if (!function_exists('slides_meta')) {
                     </tr>
                 </table>
             </div>
-            <br>
-            <button id="save-slide" class="button button-primary"><?php echo __('Save slide', 'plugin-action-banner')?></button>
         </div>
 
 
@@ -480,7 +478,7 @@ if (!function_exists('action_banner_shortcode')) {
             $horizontal_alignment = $slide['h_align']; // 'left', 'center' or 'right'
 
             $out .= '
-            <div class="ab-slide" style="background-image: url(' . $img . ');">
+            <div class="ab-slide" style="background-image: url(' . $img . '); display: none">
                 <div class="ab-blackout">
                 	<div class="ab-wrapper ';
                     switch ($label_color) {

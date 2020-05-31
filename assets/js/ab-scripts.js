@@ -1,6 +1,6 @@
 jQuery(document).ready(function( $ ) {
 	if ($(".action-banner").children().length > 1) {
-		$(".action-banner > div:gt(0)").hide();
+		$(".action-banner > div:eq(0)").show();
 
 		setInterval(function() { 
 		  $('.action-banner > div:first')

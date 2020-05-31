@@ -5,9 +5,13 @@ var currentButtonName = "";
 
 function setSlides(newSlides) {
     slides = newSlides;
-    jQuery('#slides-input').val(JSON.stringify({items: slides}));
+    updateSlides();
     lastSlideLength = slides.length;
     checkAndInit();
+}
+
+function updateSlides() {   
+    jQuery('#slides-input').val(JSON.stringify({items: slides}));
 }
 
 function checkAndInit() {
@@ -18,7 +22,7 @@ function checkAndInit() {
         if (slides[i].image === undefined) {
             slides[i].image = '';
         }
-        if (slides[i].buttons === undefined) {
+        if (slides[i].buttons === undefined || Object.keys(slides[i].buttons).length === 0) {
             slides[i].buttons = {};
         }
         if (slides[i].title === undefined) {
@@ -58,7 +62,8 @@ jQuery(document).ready(function($) {
     $('#button-key').change(onChangeButtonKey);
     $('#button-value').change(onChangeButtonValue);
 
-    $('#save-slide').click(onClickSaveSlide);
+    $('#slide-params button').click(updateSlide);
+    $('#slide-params select, #slide-params input, #slide-params textarea').change(updateSlide);
 
     function onClickAddSlide() {
         var optionName = "Slide " + slides.length;
@@ -81,14 +86,14 @@ jQuery(document).ready(function($) {
             selectInput.change();
         }
         lastSlideLength = slides.length;
-        $('#slides-input').val(JSON.stringify({items: slides}));
-        return false;
+        updateSlides();
+
+        return false; // FIX Do not submit form
     }
 
     function onRemoveSlide() {
         if (currentSlide >= slides.length || currentSlide < 0) {
             $('#slide-params').hide();
-            //$('#add-slide-button').hide();
             $('#button-params').hide();
             return;
         }
@@ -104,19 +109,20 @@ jQuery(document).ready(function($) {
         slides = newSlides;
         currentSlide = -1;
         lastSlideLength = -1;
-        $('#slides-input').val(JSON.stringify({items: slides}));
+        updateSlides();
 
         onChangeSlideSelect();
+        return false; // FIX Do not submit form
     }
 
     function onChangeSlideSelect() {
         var itemNumber = $('#select-slide').val();
+        currentSlide = itemNumber;
         if (itemNumber >= slides.length || itemNumber < 0) {
             $('#slide-params').hide();
             $('#remove-slide').hide();
             $('#button-params').hide();
         } else {
-            currentSlide = itemNumber;
             $('#slide-title').val(slides[currentSlide].title).show();
             $('#slide-text').val(slides[currentSlide].text).show();
             $('#slide-image').val(slides[currentSlide].image).show();
@@ -146,48 +152,48 @@ jQuery(document).ready(function($) {
         .on('select', function(e){
             var uploaded_image = image.state().get('selection').first();
             var image_url = uploaded_image.toJSON().url;
-            console.log(uploaded_image);
             $('#slide-image').val(image_url);
         });
-    }
-
-    function onClickSaveSlide() {
-        slides[currentSlide].title = sanitize($('#slide-title').val());
-        slides[currentSlide].text = sanitize($('#slide-text').val());
-        slides[currentSlide].image = ($('#slide-image').val());
-        slides[currentSlide].h_align = $('input[name="horizontal_align"]:checked').val();
-        slides[currentSlide].text_color = $('input[name="text_color"]:checked').val();
-        $('#slides-input').val(JSON.stringify({items: slides}));
-        $('#select-slide option[value="'+ currentSlide  +'"]').html(slides[currentSlide].title);
+        $('#slide-image').change(); // Imitate change event
+        return false; // FIX Do not submit form
     }
 
     function onClickAddButton() {
-        /*var key = $('#slide-buttons-key').val();
-        var value = $('#slide-button-value').val();
-        slides[currentSlide].buttons[key] = value;
-        $('#slide-buttons-key').val("");
-        $('#slide-button-value').val("");
-        $('#slide-buttons').html(JSON.stringify(slides[currentSlide].buttons));
-        return false;*/
+        var key = "Button " + (Object.keys(slides[currentSlide].buttons).length + 1);
+
+        slides[currentSlide].buttons[key] = key; // FIX Key equals value (no button id yet)
+        var option = new Option(key, key); 
+        $('#select-button').append($(option));
+        $('#select-button').val(key);
+        onChangeButtonSelect();
+
+        return false; // FIX Do not submit form
     }
 
     function onClickRemoveButton() {
+        delete slides[currentSlide].buttons[currentButtonName];
+        $('#select-button option').remove('[value="'+ currentButtonName  +'"]');
 
+        // Select default value
+        $('#select-button').val('-1');
+        onChangeButtonSelect();
+
+        return false; // FIX Do not submit form
     }
 
     function onChangeButtonSelect() {
         var itemKey = $('#select-button').val();
         var buttons = slides[currentSlide].buttons;
-        if (itemKey >= slides.length || itemKey < 0) {
+        currentButtonName = itemKey;
+        if (itemKey >= Object.keys(buttons).length || itemKey < 0) {
             $('#button-params').hide();
-            $('#remove-slide').hide();
+            $('#remove-button').hide();
         } else {
-            currentButtonName = itemKey;
             $('#button-key').val(currentButtonName);
             $('#button-value').val(buttons[currentButtonName]);
 
             $('#button-params').show();
-            $('#remove-slide').show();
+            $('#remove-button').show();
         }
     }
 
@@ -206,4 +212,15 @@ jQuery(document).ready(function($) {
         slides[currentSlide].buttons[currentButtonName] = $(this).val();
     }
 
+    function updateSlide() {   
+        if (currentSlide !== -1) {
+            slides[currentSlide].title = sanitize($('#slide-title').val());
+            slides[currentSlide].text = sanitize($('#slide-text').val());
+            slides[currentSlide].image = ($('#slide-image').val());
+            slides[currentSlide].h_align = $('input[name="horizontal_align"]:checked').val();
+            slides[currentSlide].text_color = $('input[name="text_color"]:checked').val();
+            updateSlides();
+        }
+        return false; // FIX Do not submit form
+    }
 });
