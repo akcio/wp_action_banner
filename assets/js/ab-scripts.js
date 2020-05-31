@@ -1,7 +1,7 @@
 jQuery(document).ready(function( $ ) {
+	$(".action-banner > div:eq(0)").show();
+		
 	if ($(".action-banner").children().length > 1) {
-		$(".action-banner > div:eq(0)").show();
-
 		setInterval(function() { 
 		  $('.action-banner > div:first')
 		    .fadeOut(500)

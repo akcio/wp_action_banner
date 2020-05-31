@@ -16,6 +16,7 @@ class WP_Action_Banner{
     public function __construct()
     {
         add_action('plugins_loaded', array($this, 'init_texdomain'));
+
         add_action('wp_enqueue_scripts', array($this, 'register_styles'), 10);
         add_action('wp_enqueue_scripts', array($this, 'register_scripts'), 10);
         add_action('admin_enqueue_scripts', array($this, 'register_admin_styles'), 10);
@@ -24,8 +25,8 @@ class WP_Action_Banner{
 
     public function init_texdomain() {
         $mo_file_path = dirname(__FILE__) . '/languages/action-banner-'. determine_locale() . '.mo';
-        load_textdomain( 'action-banner', $mo_file_path );
-        load_plugin_textdomain('action-banner', false, dirname(plugin_basename(__FILE__)).'/languages/' );
+        load_textdomain( 'plugin-action-banner', $mo_file_path );
+        load_plugin_textdomain('plugin-action-banner', false, dirname(plugin_basename(__FILE__)).'/languages/' );
     }
 
     public function register_styles() {
@@ -44,7 +45,7 @@ class WP_Action_Banner{
     }
 
     public function register_admin_scripts() {
-        wp_register_script( 'banner-admin-script', plugin_dir_url( __FILE__ ).'assets/js/ab-admin-scripts.js' );  
+        wp_register_script( 'banner-admin-script', plugin_dir_url( __FILE__ ).'assets/js/ab-admin-scripts.js' ); 
         wp_enqueue_script( 'banner-admin-script' );  
     }
 }
@@ -56,8 +57,8 @@ if (!function_exists('init_action_banners')) {
     {
         register_post_type('action_banner', array(
             'labels' => array(
-                'name' => __('Banners', 'plugin-action-banner'), // Основное название типа записи
-                'singular_name' => __('Banner', 'plugin-action-banner'), // отдельное название записи типа Book
+                'name' => __('Banners', 'plugin-action-banner'), // The main name of the post type
+                'singular_name' => __('Banner', 'plugin-action-banner'), // Additional name for post of type Book
                 'add_new' => __('Add new', 'plugin-action-banner'),
                 'add_new_item' => __('Add new banner', 'plugin-action-banner'),
                 'edit_item' => __('Edit banner', 'plugin-action-banner'),
@@ -67,7 +68,7 @@ if (!function_exists('init_action_banners')) {
                 'not_found' => __('Banners not found', 'plugin-action-banner'),
                 'not_found_in_trash' => __('Not found banners in trash', 'plugin-action-banner'),
                 'parent_item_colon' => '',
-                'menu_name' => __('Action Banners', 'plugin-action-banner')
+                'menu_name' => __('Action banners', 'plugin-action-banner')
             ),
             'public' => true,
             'publicly_queryable' => true,
@@ -171,7 +172,7 @@ if (!function_exists('slides_meta')) {
                 </th>
                 <td>
                     <input class="regular-text" type="number" name="main_height" value="<?php echo $main_height;?>"/>
-                    <p class="description"><?php echo __('Height for large screens.', 'plugin-action-banner')?></p>
+                    <p class="description"><?php echo __('Height for large screens in pixels.', 'plugin-action-banner')?></p>
                 </td>
             </tr>
             <tr>
@@ -180,7 +181,7 @@ if (!function_exists('slides_meta')) {
                 </th>
                 <td>
                     <input class="regular-text" type="number" name="relative_height" value="<?php echo $relative_height;?>"/>
-                    <p class="description"><?php echo __('Height for small screens.', 'plugin-action-banner')?></p>
+                    <p class="description"><?php echo __('Height for small screens in pixels.', 'plugin-action-banner')?></p>
                 </td>
             </tr>
             <tr>
@@ -210,7 +211,7 @@ if (!function_exists('slides_meta')) {
             </tr>
             <tr>
                 <th>
-                    <label>Slides</label>
+                    <label><?php echo __('Slides', 'plugin-action-banner');?></label>
                 </th>
                 <td>
                     <input id="slides-input" type="hidden" name="slides" value=""/>
@@ -291,7 +292,7 @@ if (!function_exists('slides_meta')) {
                 </tr>
                 <tr>
                     <th>
-                        <label><?php echo __('Button', 'plugin-action-banner');?></label>
+                        <label><?php echo __('Buttons', 'plugin-action-banner');?></label>
                     </th>
                     <td>
                         <select id="select-button" class="regular-text">

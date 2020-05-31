@@ -62,56 +62,41 @@ jQuery(document).ready(function($) {
     $('#button-key').change(onChangeButtonKey);
     $('#button-value').change(onChangeButtonValue);
 
+    // Bind to slide update
     $('#slide-params button').click(updateSlide);
     $('#slide-params select, #slide-params input, #slide-params textarea').change(updateSlide);
 
     function onClickAddSlide() {
-        var optionName = "Slide " + slides.length;
-        var o = new Option(optionName, slides.length);
-        if (lastSlideLength === 0) {
-            o.selected = true;
-        }
+        var name = "Slide " + (slides.length + 1);
         slides.push({
-            title: sanitize(optionName),
+            title: sanitize(name),
             text: "",
             buttons: {},
             image: "",
             h_align: "left",
             text_color: "dark"
         });
-        $(o).html(optionName);
-        var selectInput = $('#select-slide');
-        selectInput.append(o);
-        if (lastSlideLength === 0) {
-            selectInput.change();
-        }
-        lastSlideLength = slides.length;
+
+        var option = new Option(name, slides.length - 1); 
+        $('#select-slide').append($(option));
+        $('#select-slide').val(slides.length - 1);
+        onChangeSlideSelect();
+
         updateSlides();
 
         return false; // FIX Do not submit form
     }
 
     function onRemoveSlide() {
-        if (currentSlide >= slides.length || currentSlide < 0) {
-            $('#slide-params').hide();
-            $('#button-params').hide();
-            return;
-        }
-        var selectInput = $('#select-slide');
-        selectInput.find('option:selected').remove();
-        selectInput.find('option[value="-1"]').prop('selected', true);
-        var newSlides = [];
-        for (var i=0; i < slides.length; ++i) {
-            if (i !== currentSlide) {
-                newSlides.push(slides[i]);
-            }
-        }
-        slides = newSlides;
-        currentSlide = -1;
-        lastSlideLength = -1;
+        slides.splice(currentSlide, 1);
+        $('#select-slide option').remove('[value="'+ currentSlide  +'"]');
+
+        // Select default value
+        $('#select-slide').val('-1');
+        onChangeSlideSelect();
+
         updateSlides();
 
-        onChangeSlideSelect();
         return false; // FIX Do not submit form
     }
 
@@ -131,6 +116,7 @@ jQuery(document).ready(function($) {
             
             // Clear slide button options
             $('#select-button option').remove('[value!="-1"]');
+            onChangeButtonSelect();
 
             // Add slide button options
             var buttons = slides[currentSlide].buttons;
@@ -148,13 +134,12 @@ jQuery(document).ready(function($) {
         var image = wp.media({ 
             title: 'Upload Image',
             multiple: false
-        }).open()
-        .on('select', function(e){
+        }).open().on('select', function(e){
             var uploaded_image = image.state().get('selection').first();
             var image_url = uploaded_image.toJSON().url;
             $('#slide-image').val(image_url);
+            $('#slide-image').change(); // Imitate change event
         });
-        $('#slide-image').change(); // Imitate change event
         return false; // FIX Do not submit form
     }
 
