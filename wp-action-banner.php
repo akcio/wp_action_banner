@@ -472,7 +472,7 @@ if (!function_exists('action_banner_shortcode')) {
                     var abSlideTimeout = ' . $timeout . ';
                 </script>
                 <div class="action-banner banner-' . $rg->id . '">';
-        foreach ($slides['items'] as $slide) {
+        foreach ($slides['items'] as $key => $slide) {
             $img = $slide['image'];
             $header = $slide['title'];
             $text = $slide['text'];

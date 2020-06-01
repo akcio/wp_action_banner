@@ -4,6 +4,10 @@ var currentSlide = -1;
 var currentButtonName = "";
 
 function setSlides(newSlides) {
+    if (Array.isArray(newSlides)) {
+        //If is array - cast it to map
+        newSlides = Object.assign({}, newSlides);
+    }
     slides = newSlides;
     updateSlides();
     lastSlideLength = slides.length;
