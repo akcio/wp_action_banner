@@ -155,7 +155,6 @@ if (!function_exists('slides_meta')) {
         if (empty($btn_hover_color)) {
             $btn_hover_color = '#00ACEE';
         }
-        $newArray = Array();
         ?>
         <table class="form-table">
             <tr>
@@ -220,7 +219,6 @@ if (!function_exists('slides_meta')) {
                         <option value="-1"><?php echo __('Select slide', 'plugin-action-banner');?></option>
                         <?php $iter = 'a';?>
                         <?php foreach ($slides['items'] as $key => $slide): ?>
-                            <?php $newArray[$iter] = $slide; $iter+=1; ?>
                             <option value="<?php echo $key;?>"><?php echo $slide['title']?></option>
                         <?php endforeach; ?>
                     </select>
@@ -340,7 +338,6 @@ if (!function_exists('slides_meta')) {
         <script>
             jQuery(document).ready(function($) {
                 setSlides(<?php echo json_encode($slides['items']);?>);
-                //setSlides(<?php //echo json_encode($newArray);?>//);
             });
         </script>
         <?php
