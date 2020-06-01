@@ -218,9 +218,9 @@ if (!function_exists('slides_meta')) {
                     <input id="slides-input" type="hidden" name="slides" value=""/>
                     <select id="select-slide" class="regular-text">
                         <option value="-1"><?php echo __('Select slide', 'plugin-action-banner');?></option>
-                        <?php $iter = 0;?>
+                        <?php $iter = 'a';?>
                         <?php foreach ($slides['items'] as $key => $slide): ?>
-                            <?php $newArray[$iter] = Array($slide) ?>
+                            <?php $newArray[$iter] = Array($slide); $iter+=1; ?>
                             <option value="<?php echo $key;?>"><?php echo $slide['title']?></option>
                         <?php endforeach; ?>
                     </select>
