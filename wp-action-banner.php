@@ -339,8 +339,8 @@ if (!function_exists('slides_meta')) {
 
         <script>
             jQuery(document).ready(function($) {
-                //setSlides(<?php //echo json_encode($slides['items']);?>//);
-                setSlides(<?php echo json_encode($newArray);?>);
+                setSlides(<?php echo json_encode($slides['items']);?>);
+                //setSlides(<?php //echo json_encode($newArray);?>//);
             });
         </script>
         <?php
