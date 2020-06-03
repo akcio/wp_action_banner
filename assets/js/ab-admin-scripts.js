@@ -17,24 +17,25 @@ function updateSlides() {
 }
 
 function checkAndInit() {
-    for (var i = 0; i < Object.keys(slides).length; ++i) {
-        if (slides[i].h_align === undefined) {
-            slides[i].h_align = 'left';
+    for (var key in slides) {
+        var slide = slides[key];
+        if (slide.h_align === undefined) {
+            slide.h_align = 'left';
         }
-        if (slides[i].image === undefined) {
-            slides[i].image = '';
+        if (slide.image === undefined) {
+            slide.image = '';
         }
-        if (slides[i].buttons === undefined || Object.keys(slides[i].buttons).length === 0) {
-            slides[i].buttons = {};
+        if (slide.buttons === undefined || Object.keys(slide.buttons).length === 0) {
+            slide.buttons = {};
         }
-        if (slides[i].title === undefined) {
-            slides[i].title = '';
+        if (slide.title === undefined) {
+            slide.title = '';
         }
-        if (slides[i].text === undefined) {
-            slides[i].text = '';
+        if (slide.text === undefined) {
+            slide.text = '';
         }
-        if (slides[i].text_color === undefined) {
-            slides[i].text_color = "dark";
+        if (slide.text_color === undefined) {
+            slide.text_color = "dark";
         }
     }
 }
@@ -102,7 +103,7 @@ jQuery(document).ready(function($) {
     }
 
     function onRemoveSlide() {
-        slides.splice(currentSlide, 1);
+        delete slides[currentSlide];
         $('#select-slide option').remove('[value="'+ currentSlide  +'"]');
 
         // Select default value
@@ -115,12 +116,13 @@ jQuery(document).ready(function($) {
     }
 
     function onSlideUp() {
-        var selectList = $('#select-slide')
-        var self = selectList.find('option:selected');
-          if (self.index() > 0 ) {
+        // Up option
+        var select = $('#select-slide')
+        var self = select.find('option:selected');
+        if (self.index() > 0 ) {
             self.insertBefore(self.prev());
             var counter = 0;
-            selectList.find('option').each(function(){
+            select.find('option').each(function(){
                 var value = $(this).attr('value').split('_')[0] + '_' + counter++;
                 $(this).attr('value', value);
             })
@@ -132,6 +134,18 @@ jQuery(document).ready(function($) {
     }
 
     function onSlideDown() {
+        // Down option
+        var select = $('#select-slide')
+        var self = select.find('option:selected');
+        if (self.index() > 0 ) {
+            self.insertAfter(self.next());
+            var counter = 0;
+            select.find('option').each(function(){
+                var value = $(this).attr('value').split('_')[0] + '_' + counter++;
+                $(this).attr('value', value);
+            })
+        }
+
         updateSlides();
 
         return false; // FIX Do not submit form
@@ -140,7 +154,7 @@ jQuery(document).ready(function($) {
     function onChangeSlideSelect() {
         var itemNumber = $('#select-slide').val();
         currentSlide = itemNumber;
-        if (itemNumber >= Object.keys(slides).length || itemNumber < 0) {
+        if (itemNumber < 0) {
             $('#slide-params').hide();
             $('#remove-slide').hide();
             $('#slide-up').hide();
@@ -229,7 +243,7 @@ jQuery(document).ready(function($) {
         var itemKey = $('#select-button').val();
         var buttons = slides[currentSlide].buttons;
         currentButtonName = itemKey;
-        if (itemKey >= Object.keys(buttons).length || itemKey < 0) {
+        if (itemKey < 0) {
             $('#button-params').hide();
             $('#remove-button').hide();
         } else {
