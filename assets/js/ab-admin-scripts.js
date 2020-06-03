@@ -1,5 +1,4 @@
 var slides = null;
-var lastSlideLength = 0;
 var currentSlide = -1;
 var currentButtonName = "";
 
@@ -10,7 +9,6 @@ function setSlides(newSlides) {
     }
     slides = newSlides;
     updateSlides();
-    lastSlideLength = slides.length;
     checkAndInit();
 }
 
@@ -19,7 +17,7 @@ function updateSlides() {
 }
 
 function checkAndInit() {
-    for (var i = 0; i < slides.length; ++i) {
+    for (var i = 0; i < Object.keys(slides).length; ++i) {
         if (slides[i].h_align === undefined) {
             slides[i].h_align = 'left';
         }
@@ -73,24 +71,34 @@ jQuery(document).ready(function($) {
     $('#slide-params select, #slide-params input, #slide-params textarea').change(updateSlide);
 
     function onClickAddSlide() {
-        var name = "Slide " + (slides.length + 1);
-        slides.push({
+        var number = getNewSlideNumber();
+        var name = "Slide " + (number);
+        slides[number] = {
             title: sanitize(name),
             text: "",
             buttons: {},
             image: "",
             h_align: "left",
             text_color: "dark"
-        });
+        };
 
-        var option = new Option(name, slides.length - 1); 
+        var option = new Option(name, number); 
         $('#select-slide').append($(option));
-        $('#select-slide').val(slides.length - 1);
+        $('#select-slide').val(number);
         onChangeSlideSelect();
 
         updateSlides();
 
         return false; // FIX Do not submit form
+    }
+
+    // Get free slide index
+    function getNewSlideNumber() {
+        var number = Object.keys(slides).length;
+        while (slides[number] !== undefined) {
+            number++;
+        }
+        return number;
     }
 
     function onRemoveSlide() {
@@ -107,7 +115,16 @@ jQuery(document).ready(function($) {
     }
 
     function onSlideUp() {
-
+        var selectList = $('#select-slide')
+        var self = selectList.find('option:selected');
+          if (self.index() > 0 ) {
+            self.insertBefore(self.prev());
+            var counter = 0;
+            selectList.find('option').each(function(){
+                var value = $(this).attr('value').split('_')[0] + '_' + counter++;
+                $(this).attr('value', value);
+            })
+        }
 
         updateSlides();
 
@@ -123,7 +140,7 @@ jQuery(document).ready(function($) {
     function onChangeSlideSelect() {
         var itemNumber = $('#select-slide').val();
         currentSlide = itemNumber;
-        if (itemNumber >= slides.length || itemNumber < 0) {
+        if (itemNumber >= Object.keys(slides).length || itemNumber < 0) {
             $('#slide-params').hide();
             $('#remove-slide').hide();
             $('#slide-up').hide();
@@ -155,7 +172,7 @@ jQuery(document).ready(function($) {
             else
                 $('#slide-up').hide();
 
-            if (itemNumber < slides.length - 1) 
+            if (itemNumber < Object.keys(slides).length - 1) 
                 $('#slide-down').show();
             else
                 $('#slide-down').hide();
