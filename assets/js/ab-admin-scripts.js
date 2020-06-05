@@ -57,8 +57,8 @@ jQuery(document).ready(function($) {
     $('#select-slide').change(onChangeSlideSelect);
     $('#add-slide').click(onClickAddSlide);
     $('#remove-slide').click(onRemoveSlide);
-    $('#slide-up').click(onSlideUp);
-    $('#slide-down').click(onSlideDown);
+    /*$('#slide-up').click(onSlideUp);
+    $('#slide-down').click(onSlideDown);*/
     $('#add-slide-image').click(onClickAddImageButton);
     
     $('#select-button').change(onChangeButtonSelect);
@@ -95,11 +95,12 @@ jQuery(document).ready(function($) {
 
     // Get free slide index
     function getNewSlideNumber() {
-        var number = Object.keys(slides).length;
-        while (slides[number] !== undefined) {
-            number++;
+        var maxSlideKey = 0; 
+        for (var key in slides) {
+            if (maxSlideKey < parseInt(key))
+                maxSlideKey = parseInt(key);
         }
-        return number;
+        return maxSlideKey + 1;
     }
 
     function onRemoveSlide() {
@@ -115,17 +116,13 @@ jQuery(document).ready(function($) {
         return false; // FIX Do not submit form
     }
 
-    function onSlideUp() {
+    /*function onSlideUp() {
         // Up option
         var select = $('#select-slide')
         var self = select.find('option:selected');
         if (self.index() > 0 ) {
             self.insertBefore(self.prev());
             var counter = 0;
-            select.find('option').each(function(){
-                var value = $(this).attr('value').split('_')[0] + '_' + counter++;
-                $(this).attr('value', value);
-            })
         }
 
         updateSlides();
@@ -139,17 +136,12 @@ jQuery(document).ready(function($) {
         var self = select.find('option:selected');
         if (self.index() > 0 ) {
             self.insertAfter(self.next());
-            var counter = 0;
-            select.find('option').each(function(){
-                var value = $(this).attr('value').split('_')[0] + '_' + counter++;
-                $(this).attr('value', value);
-            })
         }
 
         updateSlides();
 
         return false; // FIX Do not submit form
-    }
+    }*/
 
     function onChangeSlideSelect() {
         var itemNumber = $('#select-slide').val();
@@ -181,7 +173,7 @@ jQuery(document).ready(function($) {
             $('#slide-params').show();
             $('#remove-slide').show();
 
-            if (itemNumber > 0)
+            /*if (itemNumber > 0)
                 $('#slide-up').show();
             else
                 $('#slide-up').hide();
@@ -189,7 +181,7 @@ jQuery(document).ready(function($) {
             if (itemNumber < Object.keys(slides).length - 1) 
                 $('#slide-down').show();
             else
-                $('#slide-down').hide();
+                $('#slide-down').hide();*/
         }
     }
 

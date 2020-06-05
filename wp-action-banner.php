@@ -219,8 +219,8 @@ if (!function_exists('slides_meta')) {
                     <br>
                     <button id="add-slide" class="button"><?php echo __('Add slide', 'plugin-action-banner'); ?></button>
                     <button id="remove-slide" class="button" style="display: none;"><?php echo __('Remove slide', 'plugin-action-banner');?></button>
-                    <button id="slide-up" class="button" style="display: none;"><?php echo __('Move up', 'plugin-action-banner'); ?></button>
-                    <button id="slide-down" class="button" style="display: none;"><?php echo __('Move down', 'plugin-action-banner');?></button>
+                    <!--<button id="slide-up" class="button" style="display: none;"><?php echo __('Move up', 'plugin-action-banner'); ?></button>
+                    <button id="slide-down" class="button" style="display: none;"><?php echo __('Move down', 'plugin-action-banner');?></button>-->
                 </td>
             </tr>
         </table>
