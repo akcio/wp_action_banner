@@ -64,6 +64,7 @@ jQuery(document).ready(function($) {
     $('#select-button').change(onChangeButtonSelect);
     $('#add-button').click(onClickAddButton);
     $('#remove-button').click(onClickRemoveButton);
+    $('#slide-title').change(onChangeSlideTitle);
     $('#button-key').change(onChangeButtonKey);
     $('#button-value').change(onChangeButtonValue);
 
@@ -183,6 +184,10 @@ jQuery(document).ready(function($) {
             else
                 $('#slide-down').hide();*/
         }
+    }
+
+    function onChangeSlideTitle() {
+        $('#select-slide option:selected').text($(this).val());
     }
 
     function onClickAddImageButton() {
