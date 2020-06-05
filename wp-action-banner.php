@@ -10,43 +10,36 @@ Text Domain: plugin-action-banner
 
 defined( 'ABSPATH' ) or die( 'Nope, not accessing this' );
 
+add_shortcode('load_ab_assets', 'load_ab_assets');
+if ( ! function_exists( 'load_ab_assets' ) ) {
+    function load_ab_assets($atts) {
+        wp_register_style('banner-styles', plugin_dir_url( __FILE__ ).'assets/css/ab-styles.css');
+        wp_enqueue_style('banner-styles');
+        wp_register_script( 'banner-scripts', plugin_dir_url( __FILE__ ).'assets/js/ab-scripts.js' );  
+        wp_enqueue_script( 'banner-scripts' );  
+    }
+}
 
+add_shortcode('load_ab_admin_assets', 'load_ab_admin_assets');
+if ( ! function_exists( 'load_ab_admin_assets' ) ) {
+    function load_ab_admin_assets($atts) {
+        wp_register_style('banner-admin-style', plugin_dir_url( __FILE__ ).'assets/css/ab-admin-styles.css');
+        wp_enqueue_style('banner-admin-style');
+        wp_register_script( 'banner-admin-script', plugin_dir_url( __FILE__ ).'assets/js/ab-admin-scripts.js' ); 
+        wp_enqueue_script( 'banner-admin-script' ); 
+    }
+}
 
 class WP_Action_Banner{
     public function __construct()
     {
         add_action('plugins_loaded', array($this, 'init_texdomain'));
-
-        add_action('wp_enqueue_scripts', array($this, 'register_styles'), 10);
-        add_action('wp_enqueue_scripts', array($this, 'register_scripts'), 10);
-        add_action('admin_enqueue_scripts', array($this, 'register_admin_styles'), 10);
-        add_action('admin_enqueue_scripts', array($this, 'register_admin_scripts'), 10);
     }
 
     public function init_texdomain() {
         $mo_file_path = dirname(__FILE__) . '/languages/action-banner-'. determine_locale() . '.mo';
         load_textdomain( 'plugin-action-banner', $mo_file_path );
         load_plugin_textdomain('plugin-action-banner', false, dirname(plugin_basename(__FILE__)).'/languages/' );
-    }
-
-    public function register_styles() {
-        wp_register_style('banner-styles', plugin_dir_url( __FILE__ ).'assets/css/ab-styles.css');
-        wp_enqueue_style('banner-styles');
-    }
-
-    public function register_scripts() {
-        wp_register_script( 'banner-scripts', plugin_dir_url( __FILE__ ).'assets/js/ab-scripts.js' );  
-        wp_enqueue_script( 'banner-scripts' );  
-    }
-
-    public function register_admin_styles() {
-        wp_register_style('banner-admin-style', plugin_dir_url( __FILE__ ).'assets/css/ab-admin-styles.css');
-        wp_enqueue_style('banner-admin-style');
-    }
-
-    public function register_admin_scripts() {
-        wp_register_script( 'banner-admin-script', plugin_dir_url( __FILE__ ).'assets/js/ab-admin-scripts.js' ); 
-        wp_enqueue_script( 'banner-admin-script' );  
     }
 }
 
@@ -156,6 +149,7 @@ if (!function_exists('slides_meta')) {
             $btn_hover_color = '#00ACEE';
         }
         ?>
+        <?php do_shortcode('[load_ab_admin_assets]') ?>
         <table class="form-table">
             <tr>
                 <th>
@@ -436,6 +430,8 @@ add_action('save_post', 'save_action_stickers_meta');
 if (!function_exists('action_banner_shortcode')) {
     function action_banner_shortcode($atts)
     {
+        do_shortcode('[load_ab_assets]');
+
         global $post;
 
         $rg = (object) shortcode_atts( [
